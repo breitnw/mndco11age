@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+	<img src="{{ url_for('static', filename='images/meowth-180-crop.png') }}" id="logo">
+	<h1>welcome to my website!!!! :P</h1>
+	<p>
+		there's not much here yet... here are some links you can look at
+		in the meantime if you want, there might be cool stuff there........
+	</p>
+	<ul>
+		<li><a href="https://github.com/breitnw" target="_blank">github</a></li>
+		<li><a href="https://twitter.com/_smsdk" target="_blank">twitter</a></li>
+		<li><a href="https://soundcloud.com/smsdk" target="_blank">soundcloud</a></li>
+	</ul>
+	<div id="folders" class="mono">
+		<div style="left: 0rem; top: 2rem;">
+			<a href="{{ url_for('empty') }}">
+				<img src="{{ url_for('static', filename='images/icons/folder_crop.png') }}">
+			</a>
+			<p>stuff</p>
+		</div>
+		<div style="left: 3rem; top: 3rem;">
+			<a href="{{ url_for('demo') }}">
+				<img src="{{ url_for('static', filename='images/icons/folder_crop.png') }}">
+			</a>
+			<p>untitled folder</p>
+		</div>
+	</div>
+{% endblock%}

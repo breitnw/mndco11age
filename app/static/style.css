@@ -1,0 +1,44 @@
+html {
+    background: #e3e1d8;
+    background-image: url(/static/images/background.jpg);
+}
+
+body {
+    font-family: Helvetica Neue;
+}
+
+#contents {
+    padding: 2rem;
+    display: block;
+    max-width: 50rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#logo {
+    width: 5rem;
+}
+
+#mado {
+    width: 4rem;
+    position: fixed;
+    bottom: 0;
+}
+
+#folders > div {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-family: monospace;
+}
+
+#folders > div > a > img {
+    width: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mono {
+    font-family: monospace;
+}
