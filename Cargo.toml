@@ -1,0 +1,12 @@
+[package]
+name = "mndco11age"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+http-bytes = "0.1.0"
+mime = "0.3.17"
+minijinja = { version = "0.31.0", features = ["source"] }
+new_mime_guess = "4.0.1"
