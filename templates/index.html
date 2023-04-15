@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-	<img src="{{ url_for('static', filename='images/meowth-180-crop.png') }}" id="logo">
-	<h1>welcome to my website!!!! :P</h1>
+	<img src="static/images/meowth-180-crop.png" id="logo">
+	<h1>welcome to my website!</h1>
 	<p>
 		there's not much here yet... here are some links you can look at
 		in the meantime if you want, there might be cool stuff there........
@@ -14,14 +14,14 @@
 	</ul>
 	<div id="folders" class="mono">
 		<div style="left: 0rem; top: 2rem;">
-			<a href="{{ url_for('empty') }}">
-				<img src="{{ url_for('static', filename='images/icons/folder_crop.png') }}">
+			<a href="empty">
+				<img src="static/images/icons/folder_crop.png">
 			</a>
 			<p>stuff</p>
 		</div>
 		<div style="left: 3rem; top: 3rem;">
-			<a href="{{ url_for('demo') }}">
-				<img src="{{ url_for('static', filename='images/icons/folder_crop.png') }}">
+			<a href="demo">
+				<img src="static/images/icons/folder_crop.png">
 			</a>
 			<p>untitled folder</p>
 		</div>

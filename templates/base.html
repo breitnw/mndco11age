@@ -8,14 +8,17 @@
 		<title>sdk's cool website</title>
 		<meta name="description" content="sum projects n stuff">
 
-		<link rel="icon" href="/favicons/favicon.ico">
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<base href="http://localhost:7878">
+<!--		<base href="https://mndco11age.xyz">-->
+
+		<link rel="icon" href="static/favicons/favicon.ico">
+		<link rel="stylesheet" href="static/style.css">
 	</head>
 
 	<body>
         <div id="contents">
             {% block contents %}{% endblock %}
         </div>
-        <img src="{{ url_for('static', filename='images/madotsuki.webp') }}" id="mado">
+        <img src="static/images/madotsuki.webp" id="mado" alt="mado gif">
 	</body>
 </html>
