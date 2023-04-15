@@ -15,7 +15,7 @@ use mime;
 use mndco11age::ThreadPool;
 
 fn main() {
-    const ADDR: &str = "127.0.0.1:7878";
+    const ADDR: &str = "127.0.0.1:443";
 
     let listener = TcpListener::bind(ADDR).unwrap();
 
@@ -35,7 +35,7 @@ fn main() {
         let env = env.clone();
 
         pool.execute(move || {
-            handle_connection(env, stream);
+            handle_connection(env, stream).unwrap();
         });
     }
 }
