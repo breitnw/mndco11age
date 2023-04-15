@@ -10,3 +10,4 @@ http-bytes = "0.1.0"
 mime = "0.3.17"
 minijinja = { version = "0.31.0", features = ["source"] }
 new_mime_guess = "4.0.1"
+openssl = "0.10.50"
