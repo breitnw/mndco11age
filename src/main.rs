@@ -1,11 +1,9 @@
-mod multithreading;
-
 use std::error::Error;
 use std::fs;
-use std::net::TcpListener;
-use std::net::TcpStream;
-use std::io::{prelude::*, BufReader};
+use std::net::{TcpListener, TcpStream};
+use std::io::{BufReader, BufRead, Write};
 use std::sync::Arc;
+
 use http_bytes::http::{header, Response};
 use http_bytes::http::response::Builder;
 
@@ -14,12 +12,10 @@ use minijinja::{context, Environment, Source};
 use new_mime_guess;
 use mime;
 
-use openssl::ssl::SslAcceptor;
-use openssl::ssl::SslFiletype;
-use openssl::ssl::SslMethod;
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod, SslStream};
 
-use multithreading::ThreadPool;
-use openssl::ssl::SslStream;
+mod thread;
+use thread::ThreadPool;
 
 fn main() {
     const ADDR: &str = "0.0.0.0:443";
@@ -50,8 +46,14 @@ fn main() {
                 let env = env.clone();
                 
                 pool.execute(move || {
-                    let stream = acceptor.accept(stream).unwrap();
-                    handle_connection(stream, env).unwrap();
+                    match acceptor.accept(stream) {
+                        Ok(s) => {
+                            if let Err(e) = handle_connection(s, env) {
+                                println!("Error handling connection: {}", e)
+                            }
+                        }
+                        Err(e) => { println!("Error accepting stream: {}", e) }
+                    }
                 });
             }
             Err(_) => {
