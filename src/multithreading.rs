@@ -1,7 +1,6 @@
 use std::{
     sync::{mpsc, Arc, Mutex},
     thread,
-    time::SystemTime,
 };
 
 pub struct ThreadPool {

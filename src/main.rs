@@ -19,6 +19,7 @@ use openssl::ssl::SslFiletype;
 use openssl::ssl::SslMethod;
 
 use multithreading::ThreadPool;
+use openssl::ssl::SslStream;
 
 fn main() {
     const ADDR: &str = "0.0.0.0:443";
@@ -31,7 +32,7 @@ fn main() {
 
     let listener = TcpListener::bind(ADDR).unwrap();
 
-    println!("listening on http://{ADDR}");
+    println!("listening on {ADDR}");
 
     // Add minijinja templates to the environment
     let mut env = Environment::new();
@@ -49,7 +50,8 @@ fn main() {
                 let env = env.clone();
                 
                 pool.execute(move || {
-                    handle_connection( stream, acceptor, env).unwrap();
+                    let stream = acceptor.accept(stream).unwrap();
+                    handle_connection(stream, env).unwrap();
                 });
             }
             Err(_) => {
@@ -60,11 +62,10 @@ fn main() {
 }
 
 fn handle_connection(
-    stream: TcpStream, 
-    acceptor: Arc<SslAcceptor>, 
+    mut stream: SslStream<TcpStream>, 
     env: Arc<Environment>
 ) -> Result<(), Box<dyn Error>> {
-    let mut stream = acceptor.accept(stream).unwrap();
+    stream.do_handshake()?;
 
     let mut buf_reader = BufReader::new(&mut stream);
     let buf = buf_reader.fill_buf().unwrap();
