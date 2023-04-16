@@ -1,3 +1,5 @@
+mod multithreading;
+
 use std::error::Error;
 use std::fs;
 use std::net::TcpListener;
@@ -12,10 +14,20 @@ use minijinja::{context, Environment, Source};
 use new_mime_guess;
 use mime;
 
-use mndco11age::ThreadPool;
+use openssl::ssl::SslAcceptor;
+use openssl::ssl::SslFiletype;
+use openssl::ssl::SslMethod;
+
+use multithreading::ThreadPool;
 
 fn main() {
     const ADDR: &str = "0.0.0.0:443";
+
+    let mut acceptor = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+    acceptor.set_private_key_file("/etc/letsencrypt/live/mndco11age.xyz/privkey.pem", SslFiletype::PEM).unwrap();
+    acceptor.set_certificate_chain_file("/etc/letsencrypt/live/mndco11age.xyz/fullchain.pem").unwrap();
+    acceptor.check_private_key().unwrap();
+    let acceptor = Arc::new(acceptor.build());
 
     let listener = TcpListener::bind(ADDR).unwrap();
 
@@ -31,16 +43,29 @@ fn main() {
     let pool = ThreadPool::new(4);
 
     for stream in listener.incoming() {
-        let stream = stream.unwrap();
-        let env = env.clone();
-
-        pool.execute(move || {
-            handle_connection(env, stream).unwrap();
-        });
+        match stream {
+            Ok(stream) => {
+                let acceptor = acceptor.clone();
+                let env = env.clone();
+                
+                pool.execute(move || {
+                    handle_connection( stream, acceptor, env).unwrap();
+                });
+            }
+            Err(_) => {
+                println!("Connection failed!");
+            },
+        }
     }
 }
 
-fn handle_connection(env: Arc<Environment>, mut stream: TcpStream) -> Result<(), Box<dyn Error>> {
+fn handle_connection(
+    stream: TcpStream, 
+    acceptor: Arc<SslAcceptor>, 
+    env: Arc<Environment>
+) -> Result<(), Box<dyn Error>> {
+    let mut stream = acceptor.accept(stream).unwrap();
+
     let mut buf_reader = BufReader::new(&mut stream);
     let buf = buf_reader.fill_buf().unwrap();
 
@@ -56,7 +81,6 @@ fn handle_connection(env: Arc<Environment>, mut stream: TcpStream) -> Result<(),
 }
 
 fn build_res(env: Arc<Environment>, buf: &[u8]) -> Result<(Builder, Vec<u8>), Box<dyn Error>>  {
-
     let mut res_builder = Response::builder();
     let mut body: Vec<u8> = Vec::new();
 
