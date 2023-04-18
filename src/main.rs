@@ -63,8 +63,7 @@ fn main() {
                 // If we have an SslAcceptor, we should use HTTPS
                 let acceptor = acceptor.clone();
                 pool.execute(move || match acceptor.accept(tcp_stream) {
-                    Ok(mut ssl_stream) => {
-                        ssl_stream.do_handshake().unwrap(); //TODO: did we already do a handshake?
+                    Ok(ssl_stream) => {
                         if let Err(e) = handle_request(ssl_stream, env) {
                             println!("Error handling connection: {}", e)
                         }
