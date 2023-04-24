@@ -46,6 +46,7 @@ fn main() {
     let env = Arc::from({
         let mut env = Environment::new();
         env.set_source(Source::from_path("templates"));
+        env.add_global("BASE_URL", format!("{}://{}", protocol, dotenv!("STATIC_HOST")));
         env
     });
 

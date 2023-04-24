@@ -6,12 +6,6 @@ body {
     font-family: Helvetica Neue, sans-serif;
 }
 
-h1 {
-    font-size: small;
-    text-align: center;
-    background-color: bisque;
-}
-
 #contents {
     padding: 2rem;
     display: block;
