@@ -1,10 +1,15 @@
 html {
-    background: #e3e1d8;
-    background-image: url(/static/images/background.jpg);
+    background: #e3e1d8 url(/static/images/background.jpg);
 }
 
 body {
-    font-family: Helvetica Neue;
+    font-family: Helvetica Neue, sans-serif;
+}
+
+h1 {
+    font-size: small;
+    text-align: center;
+    background-color: bisque;
 }
 
 #contents {

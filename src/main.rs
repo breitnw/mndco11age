@@ -17,6 +17,7 @@ use response::build_res;
 
 fn main() {
     // TODO: enable caching
+    // TODO: add URL to .env for links/resources, load into minijinja environment
 
     // Load variables from .env
     let (addr, protocol) = if is_debug() {
@@ -53,7 +54,7 @@ fn main() {
 
     // Listen on the specified port
     let listener = TcpListener::bind(addr).unwrap();
-    println!("listening on {addr}");
+    println!("listening on {protocol}://{addr}");
 
     for tcp_stream in listener.incoming() { match tcp_stream {
         Ok(tcp_stream) => {
