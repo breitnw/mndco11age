@@ -41,3 +41,25 @@ body {
 .mono {
     font-family: monospace;
 }
+
+.no-underline {
+    text-decoration: none;
+}
+
+.icon {
+    height: 1em;
+    margin-bottom: -1px;
+    margin-right: 0.2em;
+    margin-left: 0.2em;
+}
+
+footer {
+    bottom: 0;
+    right: 0;
+    padding: 0 1em 0 1em;
+    margin-right: 0.5em;
+    margin-bottom: 1em;
+    position: fixed;
+    font-size: small;
+    text-align: center;
+}
