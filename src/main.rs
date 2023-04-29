@@ -92,7 +92,7 @@ fn handle_request(
     env: Arc<Environment>,
 ) -> Result<(), Box<dyn Error>> {
     let mut buf_reader = BufReader::new(&mut stream);
-    let buf = buf_reader.fill_buf().unwrap();
+    let buf = buf_reader.fill_buf()?;
 
     let (mut res_builder, body) = build_res(env, buf)?;
 
