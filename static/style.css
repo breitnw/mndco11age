@@ -67,7 +67,8 @@ footer {
     filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(89%) contrast(91%);}
 
 ul {
-    list-style-type: square;
+    list-style-type: none;
+    padding-left: 10px;
 }
 
 li a:hover {
@@ -80,7 +81,7 @@ li a:hover {
     flex-flow: row wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 10px;
+    gap: 25px;
 
 }
 
@@ -88,7 +89,7 @@ li a:hover {
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-    gap: 10px;
+    gap: 25px;
     flex: 1;
     min-width: 12rem;
 }
