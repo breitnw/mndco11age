@@ -3,6 +3,25 @@ use minijinja::{context, Environment};
 use std::error::Error;
 use std::fs;
 use std::sync::Arc;
+use serde::{Serialize, Deserialize};
+use serde_xml_rs::from_str;
+use include_dir::{include_dir, Dir};
+
+// TODO: put this on another page or in a xml file
+#[derive(Serialize, Deserialize, Debug)]
+struct Card {
+    link: String,
+    image_src: String,
+    name: String,
+    description: String
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+#[serde(bound(deserialize = "'de: 'static"))]
+struct Cards {
+    #[serde(rename = "$value")]
+    cards: Vec<Card>
+}
 
 pub(crate) fn build_res(
     env: Arc<Environment>,
@@ -30,7 +49,29 @@ pub(crate) fn build_res(
         }
     } else {
         let (template, context) = match uri {
-            "/" => ("index.html", context! {}),
+            "/" => {
+                // TODO: Don't read the file every time the page is visited
+                // let mut file = File::open("../data/data.xml").expect("Unable to open the file");
+                // let mut contents = String::new();
+                // file.read_to_string(&mut contents).expect("Unable to read the file");
+                // println!("{}", contents);
+
+                const DATA_DIR: Dir = include_dir!("data");
+                let data = DATA_DIR.get_file("data.xml").unwrap().contents_utf8().unwrap();
+                let cards: Cards = from_str(data).unwrap();
+                let cards = cards.cards;
+
+                let column_length = (cards.len() + 1) / 3;
+
+                let ctx = context! {
+                    columns => vec![
+                        &cards[..column_length],
+                        &cards[column_length..2 * column_length],
+                        &cards[2 * column_length..]
+                    ]
+                };
+                ("index.html", ctx)
+            },
             "/empty" => ("empty.html", context! {}),
             "/demo" => ("demo.html", context! {}),
             _ => {

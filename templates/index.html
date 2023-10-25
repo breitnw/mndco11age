@@ -27,107 +27,23 @@
 		</a>
 	</li>
 </ul>
-<p>
-	logo is meowth because hes cool and objectively the best pokémon so i cooked
-	it up in illustrator instead of doing my actual graphic design homework like
-	a real one
-</p>
 <br>
 <hr>
 <br>
 <div id="cards">
+	{% for column in columns %}
 	<div class="card-column">
-		<a class="card" href="https://github.com/breitnw/rhyolite" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/210491738-b8defba2-e8f9-419f-a428-a89a1e326a55.gif" alt="rhyolite">
+		{% for card in column %}
+		<a class="card" href="{{ card.link }}">
+			<img src="{{ card.image_src }}" alt="{{ card.name }}">
 			<div class="container">
-				<h4><b>rhyolite</b></h4>
-				<p>
-					A bare-bones rendering engine built with Vulkano (in-progress)
-				</p>
+				<h4><b>{{ card.name }}</b></h4>
+				<p>{{ card.description }}</p>
 			</div>
 		</a>
-		<a class="card" href="https://github.com/breitnw/CommuniTree" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/201558966-87f64e81-a6d5-4efb-a8cd-040bc6d40c5c.gif" alt="communitree">
-			<div class="container">
-				<h4><b>communitree</b></h4>
-				<p>
-					A social media platform encouraging environmental sustainability through healthy competition and social interaction.
-					Created by Parker Hitchcock, Katriana Trinh, and Nick Breitling for Tonka Hacks 2022
-				</p>
-			</div>
-		</a>
-		<a class="card" href="https://github.com/breitnw/gatsby" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/235373802-33715efa-5e82-45c6-b4c2-8db8d3c58095.gif" alt="gatsby">
-			<div class="container">
-				<h4><b>gatsby</b></h4>
-				<p>
-					A clicker game based on the book The Great Gatsby, made collaboratively by Nick Breitling and Luke
-					Williams for our final AP Language & Composition project
-				</p>
-			</div>
-		</a>
+		{% endfor %}
 	</div>
-	<div class="card-column">
-		<a class="card" href="https://github.com/breitnw/micromusic" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/210676224-7c595c26-bee1-4359-b41a-eeaf79173818.gif" alt="micromusic">
-			<div class="container">
-				<h4><b>micromusic</b></h4>
-				<p>
-					A tiny miniplayer for Apple Music written in Rust with SDL2
-				</p>
-			</div>
-		</a>
-		<a class="card" href="https://github.com/breitnw/cellular_automata" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/235373305-7ccddf03-b6c0-4da8-b8db-6a57df2708ff.gif" alt="cellular_automata">
-			<div class="container">
-				<h4><b>cellular_automata</b></h4>
-				<p>
-					A basic cellular automata simulator written in Java with JFrame (I didn't know how to use shaders when
-					I wrote this so it's pretty slow)
-				</p>
-			</div>
-		</a>
-		<a class="card" href="https://github.com/breitnw/checkers" target="_blank">
-			<img src="https://github.com/breitnw/checkers/raw/master/screenshots/normal.png?raw=true" alt="checkers">
-			<div class="container">
-				<h4><b>checkers</b></h4>
-				<p>
-					A terminal-playable version of checkers created for the 2022 AP CSP Create Task
-				</p>
-			</div>
-		</a>
-	</div>
-	<div class="card-column">
-		<a class="card" href="https://github.com/breitnw/ha_project" target="_blank">
-			<img src="https://github.com/breitnw/ha_project/blob/master/resources/demo.gif?raw=true" alt="ha_project">
-			<div class="container">
-				<h4><b>ha_project</b></h4>
-				<p>
-					Utilities to aid in data management for The Humanity Alliance, a Minnesota-based 501(c)(3) non-profit
-					that aspires to create long-lasting community value
-				</p>
-			</div>
-		</a>
-		<a class="card" href="https://github.com/breitnw/game3" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/235372486-26871873-4f40-4151-a15f-93e7ecab3e9b.gif" alt="game3">
-			<div class="container">
-				<h4><b>game3</b></h4>
-				<p>
-					A little experiment from a while back, made in pygame
-				</p>
-			</div>
-		</a>
-		<a class="card" href="https://github.com/breitnw/mndco11age" target="_blank">
-			<img src="https://user-images.githubusercontent.com/29758429/235374116-df02f485-57c4-4ba5-a5a0-9c11937dbbd3.gif" alt="mndco11age">
-			<div class="container">
-				<h4><b>game3</b></h4>
-				<p>
-					The website you're looking at right now! Runs on a HTTPS server built (pretty much) from scratch
-					with Rust and OpenSSL
-				</p>
-			</div>
-		</a>
-	</div>
+	{% endfor %}
 
 </div>
 <br>

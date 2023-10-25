@@ -8,7 +8,10 @@ edition = "2021"
 [dependencies]
 dotenv_codegen = "0.15.0"
 http-bytes = "0.1.0"
+include_dir = "0.7.3"
 mime = "0.3.17"
 minijinja = { version = "0.31.0", features = ["source"] }
 new_mime_guess = "4.0.1"
 openssl = "0.10.50"
+serde = { version = "1.0", features = ["derive"] }
+serde-xml-rs = "0.6.0"
