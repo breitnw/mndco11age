@@ -2,13 +2,14 @@ use std::{
     sync::{mpsc, Arc, Mutex},
     thread,
 };
+use crate::Context;
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: Option<mpsc::Sender<Job>>,
 }
 
-type Job = Box<dyn FnOnce() + Send + 'static>;
+type Job = Box<dyn FnOnce(&Context) + Send + 'static>;
 
 impl ThreadPool {
     /// Create a new ThreadPool.
@@ -22,11 +23,10 @@ impl ThreadPool {
         assert!(size > 0);
 
         let (sender, receiver) = mpsc::channel();
-
         let receiver = Arc::new(Mutex::new(receiver));
 
         let workers = (0..size)
-            .map(|i| Worker::new(i, Arc::clone(&receiver)))
+            .map(|i| Worker::new(i, receiver.clone()))
             .collect();
 
         ThreadPool {
@@ -36,7 +36,7 @@ impl ThreadPool {
     }
     pub fn execute<F>(&self, f: F)
     where
-        F: FnOnce() + Send + 'static,
+        F: FnOnce(&Context) + Send + 'static,
     {
         let job = Box::new(f);
         self.sender.as_ref().unwrap().send(job).unwrap();
@@ -63,17 +63,20 @@ pub struct Worker {
 
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-        let thread = thread::spawn(move || loop {
-            let message = receiver.lock().unwrap().recv();
-            match message {
-                Ok(job) => {
-                    // println!("Worker {id} got a job; executing...");
-                    job();
-                    // println!("Worker {id} finished!");
-                }
-                Err(_) => {
-                    println!("Worker {id} disconnected; shutting down.");
-                    break;
+        let thread = thread::spawn(move || {
+            let thread_ctx = Context::new();
+            loop {
+                let message = receiver.lock().unwrap().recv();
+                match message {
+                    Ok(job) => {
+                        // println!("Worker {id} got a job; executing...");
+                        job(&thread_ctx);
+                        // println!("Worker {id} finished!");
+                    }
+                    Err(_) => {
+                        println!("Worker {id} disconnected; shutting down.");
+                        break;
+                    }
                 }
             }
         });

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+{% if sign_disabled %}
+<p style="color: forestgreen">thank you for signing!</p>
+{% else %}
+<p>
+    sign my guestbook! just be civil, don't make me remove anything please :')
+</p>
+<form>
+    <label for="name">name:</label>
+    <input type="text" name="name" id="name">
+    <input type="submit" value="sign">
+</form>
+{% endif %}
+
+<ul id="guest-list">
+    {% for guest in guests %}
+    <li>{{ guest.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

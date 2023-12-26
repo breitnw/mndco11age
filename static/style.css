@@ -18,6 +18,10 @@ body {
     width: 5rem;
 }
 
+#text-logo {
+    width: 265px;
+}
+
 #mado {
     width: 4rem;
     position: fixed;
@@ -63,16 +67,55 @@ footer {
     margin: 1em;
     font-size: small;
     text-align: center;
-    /*color: darkgray;*/
-    filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(89%) contrast(91%);}
+    filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(89%) contrast(91%);
 
-ul {
-    list-style-type: none;
-    padding-left: 10px;
 }
 
-li a:hover {
-    color: orangered;
+#navbar {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    /*background-color: lightgrey;*/
+    border-width: 1px;
+    border-style: dashed;
+    border-color: darkgray;
+}
+
+#navbar > .page {
+    float: left;
+}
+
+#navbar > .social {
+    float: right;
+}
+
+#navbar > li > a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 10px 8px;
+}
+
+#navbar > .page > a {
+    padding: 8px 12px;
+}
+
+#navbar > .social > a {
+    padding: 8px 8px;
+}
+
+li > a {
+    /*color: darkslategray;*/
+    /*filter: brightness(0) saturate(100%) invert(28%) sepia(6%) saturate(2577%) hue-rotate(131deg) brightness(89%) contrast(89%);*/
+    filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(70%) contrast(91%);
+}
+
+li > a:hover {
+    /*color: antiquewhite;*/
+    /*filter: brightness(0) saturate(100%) invert(89%) sepia(3%) saturate(2240%) hue-rotate(333deg) brightness(105%) contrast(104%);*/
+    /*orangered*/
+    filter: brightness(0) saturate(100%) invert(61%) sepia(96%) saturate(5955%) hue-rotate(358deg) brightness(99%) contrast(113%);
 }
 
 /* CARDS */
@@ -124,4 +167,18 @@ li a:hover {
 
 .container > p {
     margin-top: 0;
+}
+
+/* GUESTBOOK */
+input[type=text] {
+    border-radius: 0;
+}
+input[type=submit] {
+    border-radius: 0;
+    background-color: lightsteelblue;
+}
+
+#guest-list {
+    list-style-type: none;
+    padding-left: 0;
 }
