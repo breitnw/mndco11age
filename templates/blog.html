@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 
+{% block title %}blog | NICK'S COOL WEBSITE{% endblock %}
+
 {% block contents %}
-<p>
-    there will be a blog here later... first post on how to survive in the dead internet.. stay tuned
-</p>
+{% for article in articles %}
+<div class="article-card">
+    <h1><a href="blog/{{ article.location }}">{{ article.title }}</a></h1>
+    <p style="color: gray"><i>{{ article.timestamp }}</i></p>
+    <p>{{ article.preview }}</p>
+    {% if not loop.last %}
+    <hr>
+    {% endif %}
+</div>
+{% endfor %}
 {% endblock %}

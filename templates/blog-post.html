@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}{{article.title}}{% endblock %}
+
+{% block contents %}
+<h1>{{ article.title }}</h1>
+<p style="color: gray"><i>{{ article.timestamp }}</i></p>
+{{ article.html|safe }}
+{% endblock %}

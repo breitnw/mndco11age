@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}guestbook | NICK'S COOL WEBSITE{% endblock %}
+
 {% block contents %}
 {% if sign_disabled %}
 <p style="color: forestgreen">thank you for signing!</p>
@@ -7,7 +9,7 @@
 <p>
     sign my guestbook! just be civil, don't make me remove anything please :')
 </p>
-<form>
+<form method="post">
     <label for="name">name:</label>
     <input type="text" name="name" id="name">
     <input type="submit" value="sign">

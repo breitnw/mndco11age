@@ -1,5 +1,3 @@
-extern crate dotenv_codegen;
-
 use dotenv_codegen::dotenv;
 use std::error::Error;
 use std::io::{BufRead, BufReader, Read, Write};
@@ -10,25 +8,26 @@ use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 mod thread;
 use thread::ThreadPool;
-
 mod response;
 mod database;
 mod context;
+mod blog;
 
 use response::build_res;
+use crate::blog::Article;
 use crate::context::Context;
 
 
 fn main() {
-    // TODO: enable caching
-    // TODO: add URL to .env for links/resources, load into minijinja environment
-
     // Load variables from .env
     let (addr, protocol) = get_addr_protocol();
     let use_https = protocol == "https";
 
     // Initialize the database
     database::init().unwrap();
+
+    // let article = Article::new("surviving the dead internet", include_str!("../data/blog/surviving-the-dead-internet.md"));
+    // database::add_article(article).unwrap();
 
     // Build a SSL acceptor from private and public key files
     let acceptor = if use_https {
