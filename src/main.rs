@@ -14,7 +14,6 @@ mod context;
 mod blog;
 
 use response::build_res;
-use crate::blog::Article;
 use crate::context::Context;
 
 
@@ -25,9 +24,6 @@ fn main() {
 
     // Initialize the database
     database::init().unwrap();
-
-    // let article = Article::new("surviving the dead internet", include_str!("../data/blog/surviving-the-dead-internet.md"));
-    // database::add_article(article).unwrap();
 
     // Build a SSL acceptor from private and public key files
     let acceptor = if use_https {

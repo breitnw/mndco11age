@@ -1,11 +1,13 @@
 use chrono::Utc;
 use pulldown_cmark::{Event, html, Parser, Tag};
 use serde::Serialize;
+use crate::database::format_date;
 
 #[derive(Serialize, Debug)]
 pub struct Article {
     pub title: String,
     pub timestamp: i64,
+    pub date: String,
     pub location: String,
     pub preview: String,
     pub html: String,
@@ -62,6 +64,7 @@ impl Article {
         Article {
             title: title.to_string(),
             timestamp,
+            date: format_date(timestamp),
             location,
             preview,
             html

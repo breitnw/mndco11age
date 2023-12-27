@@ -1,5 +1,5 @@
 use rusqlite::Connection;
-use chrono::Utc;
+use chrono::{DateTime, Utc};
 use serde::Serialize;
 use crate::blog::Article;
 
@@ -7,6 +7,7 @@ use crate::blog::Article;
 pub struct Guest {
     pub name: String,
     pub timestamp: i64,
+    pub date: String,
 }
 
 pub fn init() -> Result<(), rusqlite::Error> {
@@ -40,15 +41,14 @@ pub fn get_guests() -> Result<Vec<Guest>, rusqlite::Error> {
         Ok(Guest {
             name: row.get(0)?,
             timestamp: row.get(1)?,
+            date: format_date(row.get(1)?),
         })
     })?;
     guest_iter.collect()
 }
 
 pub fn add_article(article: Article) -> Result<(), rusqlite::Error> {
-    let timestamp = Utc::now().timestamp();
     let conn = Connection::open("data/db.sqlite")?;
-
     conn.execute("INSERT INTO articles (title, timestamp, location, preview, html) VALUES (?1, ?2, ?3, ?4, ?5)",
                  (article.title, article.timestamp, article.location, article.preview, article.html))?;
     Ok(())
@@ -61,6 +61,7 @@ pub fn get_articles() -> Result<Vec<Article>, rusqlite::Error> {
         Ok(Article {
             title: row.get(0)?,
             timestamp: row.get(1)?,
+            date: format_date(row.get(1)?),
             location: row.get(2)?,
             preview: row.get(3)?,
             html: row.get(4)?,
@@ -76,6 +77,7 @@ pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
         [location], |row| Ok(Article {
             title: row.get(0)?,
             timestamp: row.get(1)?,
+            date: format_date(row.get(1)?),
             location: location.to_string(),
             preview: row.get(2)?,
             html: row.get(3)?,
@@ -84,4 +86,11 @@ pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
     html_iter
         .next()
         .unwrap_or(Err(rusqlite::Error::InvalidQuery))
+}
+
+pub(crate) fn format_date(timestamp: i64) -> String {
+    DateTime::from_timestamp(timestamp, 0)
+        .unwrap()
+        .format("%B %e, %Y")
+        .to_string()
 }
