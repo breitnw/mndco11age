@@ -105,13 +105,13 @@ footer {
     padding: 8px 8px;
 }
 
-#navbar > a {
+#navbar > li > a {
     /*color: darkslategray;*/
     /*filter: brightness(0) saturate(100%) invert(28%) sepia(6%) saturate(2577%) hue-rotate(131deg) brightness(89%) contrast(89%);*/
     filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(70%) contrast(91%);
 }
 
-#navbar > a:hover {
+#navbar > li > a:hover {
     /*color: antiquewhite;*/
     /*filter: brightness(0) saturate(100%) invert(89%) sepia(3%) saturate(2240%) hue-rotate(333deg) brightness(105%) contrast(104%);*/
     /*orangered*/
