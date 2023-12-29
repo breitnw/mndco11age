@@ -7,19 +7,16 @@ body {
 }
 
 #contents {
-    padding: 2rem;
+    padding: 1.5rem;
     display: block;
     max-width: 50rem;
     margin-left: auto;
     margin-right: auto;
 }
 
-#logo {
-    width: 5rem;
-}
-
 #text-logo {
     width: 265px;
+    max-width: 60%;
 }
 
 #mado {
@@ -68,53 +65,94 @@ footer {
     font-size: small;
     text-align: center;
     filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(89%) contrast(91%);
-
 }
 
-#navbar {
-    list-style-type: none;
-    padding: 0;
-    overflow: hidden;
+/* NAVBAR */
+
+nav {
+    margin-top: 1rem;
+    height: 1.2rem;
+    padding: 0.5rem 0.25rem;
     border-width: 1px;
     border-style: dashed;
     border-color: darkgray;
+
+    /*position: sticky;*/
+    /*top: 0;*/
+    /*background: #e3e1d8 url(/static/images/background.jpg);*/
 }
 
-#navbar > .page {
-    float: left;
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
 
-#navbar > .social {
-    float: right;
+#page-navbar { float: left; }
+#social-navbar { float: right; }
+
+#page-navbar li, #burger {
+    display: inline;
+    padding: 0 0.5rem;
 }
 
-#navbar > li > a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    color: inherit;
-    padding: 10px 8px;
+#social-navbar li {
+    display: inline;
+    padding: 0 0.25rem;
 }
 
-#navbar > .page > a {
-    padding: 8px 12px;
-}
-
-#navbar > .social > a {
-    padding: 8px 8px;
-}
-
-#navbar > li > a {
+nav a, #burger-menu a {
     /*color: darkslategray;*/
     /*filter: brightness(0) saturate(100%) invert(28%) sepia(6%) saturate(2577%) hue-rotate(131deg) brightness(89%) contrast(89%);*/
+    color: inherit;
     filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(70%) contrast(91%);
 }
 
-#navbar > li > a:hover {
+nav a:hover, #burger-menu a:hover {
     /*color: antiquewhite;*/
     /*filter: brightness(0) saturate(100%) invert(89%) sepia(3%) saturate(2240%) hue-rotate(333deg) brightness(105%) contrast(104%);*/
     /*orangered*/
     filter: brightness(0) saturate(100%) invert(61%) sepia(96%) saturate(5955%) hue-rotate(358deg) brightness(99%) contrast(113%);
+}
+
+#burger, #burger-menu {
+    display: none;
+}
+
+#burger-menu {
+    margin-top: 0;
+    padding: 0.5rem 0.25rem;
+    border-width: 1px;
+    border-top-width: 0;
+    border-style: dashed;
+    border-color: darkgray;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+
+    /*position: sticky;*/
+    /*top: 2.3rem;*/
+    /*background: #e3e1d8 url(/static/images/background.jpg);*/
+}
+
+#burger-menu ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+#burger-menu li {
+    padding: 0.2rem 0.5rem;
+}
+
+@media (max-width: 500px) {
+    #burger {
+        display: inline;
+    }
+    #burger-menu {
+        display: block;
+    }
+    #page-navbar {
+        display: none;
+    }
 }
 
 /* CARDS */

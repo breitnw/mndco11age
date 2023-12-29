@@ -6,38 +6,54 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<title>{% block title %}{% endblock %}</title>
+<!--		TODO: CHANGE DESCRIPTION-->
 		<meta name="description" content="sum projects n stuff">
 
 		<base href="{{ BASE_URL }}">
 
 		<link rel="icon" href="static/favicons/favicon.ico">
 		<link rel="stylesheet" href="static/style.css">
+
+		<script src="https://kit.fontawesome.com/ca68633975.js" crossorigin="anonymous"></script>
 	</head>
 
 	<body>
         <div id="contents">
 			<img src="static/images/logo.png" id="text-logo" alt="nick's cool website logo" width="500px">
-			<ul id="navbar">
-				<li class="page"><a href="/" class="no-underline">software</a></li>
-				<li class="page"><a href="music" class="no-underline">music</a></li>
-				<li class="page"><a href="blog" class="no-underline">blog</a></li>
-				<li class="page"><a href="guestbook" class="no-underline">guestbook</a></li>
-				<li class="social">
-					<a href="https://github.com/breitnw" target="_blank" class="no-underline">
-						<img class="icon" src="static/icons/github.svg" alt="GitHub icon">
-					</a>
-				</li>
-				<li class="social">
-					<a href="https://twitter.com/_smsdk" target="_blank" class="no-underline">
-						<img class="icon" src="static/icons/twitter.svg" alt="Twitter icon">
-					</a>
-				</li>
-				<li class="social">
-					<a href="https://www.instagram.com/breitnw/" target="_blank" class="no-underline">
-						<img class="icon" src="static/icons/instagram.svg" alt="Instagram icon">
-					</a>
-				</li>
-			</ul>
+			<nav>
+				<a href="javascript:void(0);" id="burger" onclick="toggleBurger()"><i id="burger-icon" class="fa fa-bars"></i></a>
+				<ul id="page-navbar">
+					<li><a href="/" class="no-underline">software</a></li>
+					<li><a href="music" class="no-underline">music</a></li>
+					<li><a href="blog" class="no-underline">blog</a></li>
+					<li><a href="guestbook" class="no-underline">guestbook</a></li>
+				</ul>
+				<ul id="social-navbar">
+					<li>
+						<a href="https://github.com/breitnw" target="_blank" class="no-underline">
+							<img class="icon" src="static/icons/github.svg" alt="GitHub icon">
+						</a>
+					</li>
+					<li>
+						<a href="https://twitter.com/_smsdk" target="_blank" class="no-underline">
+							<img class="icon" src="static/icons/twitter.svg" alt="Twitter icon">
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/breitnw/" target="_blank" class="no-underline">
+							<img class="icon" src="static/icons/instagram.svg" alt="Instagram icon">
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div id="burger-menu">
+				<ul>
+					<li><a href="/" class="no-underline">software</a></li>
+					<li><a href="music" class="no-underline">music</a></li>
+					<li><a href="blog" class="no-underline">blog</a></li>
+					<li><a href="guestbook" class="no-underline">guestbook</a></li>
+				</ul>
+			</div>
             {% block contents %}{% endblock %}
         </div>
 
@@ -49,5 +65,25 @@
 			</a>
 			<span>2023 breitnw</span>
 		</footer>
+
+		<script>
+			let bi = document.getElementById("burger-icon");
+			let bm = document.getElementById("burger-menu");
+			bm.style.display = "none"
+			function toggleBurger() {
+				(bm.style.display === "none") ? openBurger() : closeBurger()
+			}
+			function openBurger() {
+				bm.style.display = "block";
+				bi.classList.remove("fa-bars");
+				bi.classList.add("fa-xmark");
+			}
+			function closeBurger() {
+				bm.style.display = "none";
+				bi.classList.remove("fa-xmark");
+				bi.classList.add("fa-bars");
+			}
+			addEventListener("resize", closeBurger);
+		</script>
 	</body>
 </html>

@@ -124,6 +124,7 @@ pub(crate) fn build_res(
                 "guestbook" => {
                     // If we're POSTing, add the user's name to the guestbook and set a cookie to indicate that they
                     // already signed
+                    dbg!(&post_map);
                     if let Some(name) = post_map.get("name") {
                         db::add_guest(name).unwrap();
                         res_builder.header(header::SET_COOKIE, "sign-disabled=true");
