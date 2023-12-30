@@ -52,7 +52,7 @@ pub(crate) fn build_res(
                     } else {
                         // Return 404 if the resource is unavailable
                         res_builder.status(404);
-                        ("404.html", context! {})
+                        ("404.html", context! { path => path })
                     }
                 }
                 "" => {
@@ -72,17 +72,17 @@ pub(crate) fn build_res(
                 "blog" => {
                     match path_split.get(1).map(|location| db::get_article(location)) {
                         // If there is a valid second part to the path, get the corresponding article
-                        Some(Ok(article)) => ("blog-post.html", context! { article => article }),
+                        Some(Ok(article)) => ("blog-post.html", context! { article => article, path => path }),
                         // If there's a second part but it's invalid, return 404
                         Some(Err(_)) => {
                             res_builder.status(404);
-                            ("404.html", context! {})
+                            ("404.html", context! { path => path })
                         }
                         // If there's not a second part, return the blog homepage
-                        None => ("blog.html", context! { articles => db::get_articles().unwrap() })
+                        None => ("blog.html", context! { articles => db::get_articles().unwrap(), path => path })
                     }
                 },
-                "blog-add" => ("blog-add.html", context! {}),
+                "blog-add" => ("blog-add.html", context! { path => path }),
                 "guestbook" => {
                     // Otherwise, render the page
                     let sign_disabled = req.headers()
@@ -91,12 +91,13 @@ pub(crate) fn build_res(
                         .map_or(false, |cookie| cookie.contains("sign-disabled=true"));
                     ("guestbook.html", context! {
                         guests => db::get_guests().unwrap(),
-                        sign_disabled => sign_disabled
+                        sign_disabled => sign_disabled,
+                        path => path
                     })
                 }
                 _ => {
                     res_builder.status(404);
-                    ("404.html", context! {})
+                    ("404.html", context! { path => path })
                 }
             };
 
@@ -109,7 +110,7 @@ pub(crate) fn build_res(
                 ctx.jinja_env
                     .get_template("404.html")
                     .unwrap()// Ok to unwrap here because 404.html always exists
-                    .render(context! {})
+                    .render(context! { path => path })
                     .unwrap()
                     .into_bytes());
 

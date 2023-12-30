@@ -6,8 +6,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<title>{% block title %}{% endblock %}</title>
-<!--		TODO: CHANGE DESCRIPTION-->
-		<meta name="description" content="sum projects n stuff">
+		<meta name="description" content="{% block description %}{% endblock %}">
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="{{ BASE_URL }}{{ path }}">
+		<meta property="og:title" content="{{ self.title() }}">
+		<meta property="og:description" content="{{ self.description() }}">
+<!--		<meta property="og:image" content="YOUR_IMAGE_URL">-->
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary"/>
+		<meta name="twitter:site" content="@_smsdk">
+		<meta name="twitter:creator" content="@_smsdk">
+		<meta property="twitter:url" content="{{ BASE_URL }}{{ path }}">
+		<meta property="twitter:title" content="{{ self.title() }}">
+		<meta property="twitter:description" content="{{ self.description() }}">
+		<meta property="twitter:image" content="static/favicons/favicon-144-precomposed.png">
 
 		<base href="{{ BASE_URL }}">
 
