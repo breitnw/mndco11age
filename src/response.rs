@@ -129,7 +129,6 @@ pub(crate) fn build_res(
                     if let Some(name) = post_map.get("name") {
                         db::add_guest(name).unwrap();
                         res_builder.header(header::SET_COOKIE, "sign-disabled=true");
-                        return redirect("/guestbook", res_builder)
                     }
                     redirect("/guestbook", res_builder)
                 }
