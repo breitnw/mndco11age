@@ -129,6 +129,8 @@ pub(crate) fn build_res(
                     if let Some(name) = post_map.get("name") {
                         db::add_guest(name).unwrap();
                         res_builder.header(header::SET_COOKIE, "sign-disabled=true");
+                    } else {
+                        println!("failed guestbook submission with body: {}", body)
                     }
                     redirect("/guestbook", res_builder)
                 }
