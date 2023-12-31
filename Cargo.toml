@@ -9,6 +9,7 @@ edition = "2021"
 chrono = "0.4.31"
 dotenv_codegen = "0.15.0"
 http-bytes = "0.1.0"
+httparse = "1.8.0"
 include_dir = "0.7.3"
 mime = "0.3.17"
 minijinja = { version = "0.31.0", features = ["source"] }

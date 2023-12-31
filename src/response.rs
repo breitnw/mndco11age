@@ -1,10 +1,10 @@
 use std::collections::HashMap;
-use http_bytes::http::{Error, header, Method, Response};
 use minijinja::context;
 use std::fs;
 use std::io::Read;
 use dotenv_codegen::dotenv;
-use http_bytes::http::response::Builder;
+use http_bytes::http::response::{ Builder };
+use http_bytes::http::{Error, header, Response};
 use crate::blog::Article;
 use crate::Context;
 use crate::database as db;
@@ -21,29 +21,28 @@ pub(crate) fn build_res(
 ) -> Result<Response<Vec<u8>>, Error> {
     let mut res_builder = Response::builder();
 
-    // If the request is complete, parse the header; otherwise, return a continue status code
-    let (req, mut body_bytes) = if let Ok(Some(val)) = http_bytes::parse_request_header_easy(buf) {
-        val
-    } else {
-        return res_builder
-            .status(100)
-            .body(vec![]);
+    let mut headers = [httparse::EMPTY_HEADER; 16];
+    let mut req = httparse::Request::new(&mut headers);
+    let res = req.parse(buf).unwrap();
+
+    let (path, method) = {
+        if let (Some(path), Some(method)) = (req.path, req.method) {
+            (path, method)
+        } else {
+            return cont();
+        }
     };
 
-    let mut body = String::new();
-    body_bytes.read_to_string(&mut body).unwrap();
-
     // Get the parts of the URI path, split at the "/" separator
-    let path = req.uri().path();
     let path_split: Vec<_> = path.split("/").skip(1).collect();
 
     // Switch on the url to determine which HTML template to return
-    match req.method() {
-        &Method::GET => {
+    match method {
+        "GET" => {
             let (template, context) = match path_split[0] {
                 "static" => {
                     // If the first part is "static", access a static resource
-                    let mime_type = new_mime_guess::from_path(req.uri().path()).first_or(mime::TEXT_HTML);
+                    let mime_type = new_mime_guess::from_path(path).first_or(mime::TEXT_HTML);
                     if let Ok(file_contents) = fs::read(&path[1..]) {
                         return res_builder
                             .header(header::CONTENT_TYPE, mime_type.essence_str())
@@ -84,11 +83,19 @@ pub(crate) fn build_res(
                 },
                 "blog-add" => ("blog-add.html", context! { path => path }),
                 "guestbook" => {
-                    // Otherwise, render the page
-                    let sign_disabled = req.headers()
-                        .get("cookie")
-                        .and_then(|cookie| cookie.to_str().ok())
-                        .map_or(false, |cookie| cookie.contains("sign-disabled=true"));
+                    if res.is_partial() {
+                        // If we have a partial response we might not have the cookies so we should wait
+                        return cont()
+                    }
+                    let sign_disabled: bool = {
+                        if let Some(&cookie) = headers.iter().find(|h| h.name == "Cookie") {
+                            let mut val = cookie.value;
+                            let mut cookie_string = String::new();
+                            val.read_to_string(&mut cookie_string).unwrap();
+                            cookie_string.contains("sign-disabled=true")
+                        } else { false }
+
+                    };
                     ("guestbook.html", context! {
                         guests => db::get_guests().unwrap(),
                         sign_disabled => sign_disabled,
@@ -119,7 +126,22 @@ pub(crate) fn build_res(
                 .header(header::CONTENT_LENGTH, body.len())
                 .body(body);
         }
-        &Method::POST => {
+        "POST" => {
+            if res.is_partial() {
+                // If we have a partial response (no body yet) we need to wait
+                return cont()
+            }
+            let body_offset = res.unwrap();
+            let mut body_bytes = &buf[body_offset..];
+            let mut body = String::new();
+
+            if body_bytes.read_to_string(&mut body).is_err() {
+                // If there's an error reading to string, also return a continue status
+                return cont();
+            };
+
+            dbg!(&body);
+
             let post_map = parse_pairs(&body);
             match path_split[0] {
                 "guestbook" => {
@@ -130,7 +152,8 @@ pub(crate) fn build_res(
                         db::add_guest(name).unwrap();
                         res_builder.header(header::SET_COOKIE, "sign-disabled=true");
                     } else {
-                        println!("failed guestbook submission with body: {}", body)
+                        println!("failed guestbook submission with body: {}", body);
+                        return cont();
                     }
                     redirect("/guestbook", res_builder)
                 }
@@ -155,6 +178,12 @@ fn redirect(endpoint: &str, mut builder: Builder) -> Result<Response<Vec<u8>>, E
         .status(303)
         .header(header::LOCATION, endpoint)
         .body(vec![])
+}
+
+fn cont() -> Result<Response<Vec<u8>>, Error> {
+    return Response::builder()
+        .status(100)
+        .body(vec! []);
 }
 
 /// Parses a list of percent-encoded pairs into a HashMap of keys and values. Instead of returning a Result, simply omits
