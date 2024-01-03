@@ -23,7 +23,16 @@ pub(crate) fn build_res(
 
     let mut headers = [httparse::EMPTY_HEADER; 16];
     let mut req = httparse::Request::new(&mut headers);
-    let res = req.parse(buf).unwrap();
+    let res = {
+        if let Ok(res) = req.parse(buf) {
+            res
+        } else {
+            // Continue if we're unable to parse the buffer
+            // TODO: not sure if this is right...
+            println!("unable to parse request: {:?}", std::str::from_utf8(buf));
+            return cont();
+        }
+    };
 
     let (path, method) = {
         if let (Some(path), Some(method)) = (req.path, req.method) {
@@ -89,10 +98,8 @@ pub(crate) fn build_res(
                     }
                     let sign_disabled: bool = {
                         if let Some(&cookie) = headers.iter().find(|h| h.name == "Cookie") {
-                            let mut val = cookie.value;
-                            let mut cookie_string = String::new();
-                            val.read_to_string(&mut cookie_string).unwrap();
-                            cookie_string.contains("sign-disabled=true")
+                            let cookie_str = std::str::from_utf8(cookie.value);
+                            cookie_str.is_ok_and(|s| s.contains("sign-disabled=true"))
                         } else { false }
 
                     };
@@ -131,16 +138,16 @@ pub(crate) fn build_res(
                 // If we have a partial response (no body yet) we need to wait
                 return cont()
             }
-            let body_offset = res.unwrap();
-            let mut body_bytes = &buf[body_offset..];
-            let mut body = String::new();
 
-            if body_bytes.read_to_string(&mut body).is_err() {
-                // If there's an error reading to string, also return a continue status
-                return cont();
+            let body = {
+                let body_offset = res.unwrap();
+                if let Ok(body) = std::str::from_utf8(&buf[body_offset..]) {
+                    body
+                } else {
+                    // If there's an error reading to string, also return a continue status
+                    return cont();
+                }
             };
-
-            dbg!(&body);
 
             let post_map = parse_pairs(&body);
             match path_split[0] {
