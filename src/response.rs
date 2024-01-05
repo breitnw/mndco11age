@@ -29,6 +29,10 @@ pub(crate) fn build_get_res(
         }
     };
 
+    // remove query
+    // TODO: change this later
+    let path = path.split("?").collect::<Vec<&str>>()[0];
+
     // Get the parts of the URI path, split at the "/" separator
     let path_split: Vec<_> = path.split("/").skip(1).collect();
 
