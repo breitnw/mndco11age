@@ -1,8 +1,8 @@
+use crate::Context;
 use std::{
     sync::{mpsc, Arc, Mutex},
     thread,
 };
-use crate::Context;
 
 pub struct ThreadPool {
     workers: Vec<Worker>,

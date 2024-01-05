@@ -381,6 +381,7 @@ dependencies = [
  "http-bytes",
  "httparse",
  "include_dir",
+ "log",
  "mime",
  "minijinja",
  "new_mime_guess",

@@ -1,7 +1,7 @@
-use chrono::Utc;
-use pulldown_cmark::{Event, html, Parser, Tag};
-use serde::Serialize;
 use crate::database::format_date;
+use chrono::Utc;
+use pulldown_cmark::{html, Event, Parser, Tag};
+use serde::Serialize;
 
 #[derive(Serialize, Debug)]
 pub struct Article {
@@ -27,13 +27,9 @@ impl Article {
             .to_ascii_lowercase()
             .chars()
             .filter_map(|c| match c {
-                'a'..='z' | '0'..='9' => {
-                    Some(c)
-                }
-                '_' | '-' | ' ' => {
-                    Some('-')
-                }
-                _ => None
+                'a'..='z' | '0'..='9' => Some(c),
+                '_' | '-' | ' ' => Some('-'),
+                _ => None,
             })
             .collect();
 
@@ -54,11 +50,7 @@ impl Article {
                 _ => (),
             }
         }
-        preview = preview
-            .split(" ")
-            .take(50)
-            .collect::<Vec<&str>>()
-            .join(" ");
+        preview = preview.split(" ").take(50).collect::<Vec<&str>>().join(" ");
         preview.push_str("...");
 
         Article {
@@ -67,7 +59,7 @@ impl Article {
             date: format_date(timestamp),
             location,
             preview,
-            html
+            html,
         }
     }
 }
