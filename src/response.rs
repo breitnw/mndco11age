@@ -109,7 +109,8 @@ pub(crate) fn build_get_res(
         }
         _ => error(404, path, &mut res_builder),
     };
-    let body = to_bytes(template, context, &ctx.jinja_env).unwrap_or({
+    let body = to_bytes(template, context, &ctx.jinja_env).unwrap_or_else(|_| {
+        // We need to use a closure since error mutates state
         let (template, context) = error(500, path, &mut res_builder);
         to_bytes(template, context, &ctx.jinja_env).unwrap()
     });
