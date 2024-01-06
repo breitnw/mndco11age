@@ -17,10 +17,12 @@
     <input type="submit" value="sign">
 </form>
 {% endif %}
-
-<ul id="guest-list">
-    {% for guest in guests %}
-    <li>{{ guest.name }}</li>
-    {% endfor %}
-</ul>
+<div id="guestbook">
+    <img style="width: 100%" src="static/images/guestbook.png">
+    <ul id="guest-list">
+        {% for guest in guests %}
+        <li>{{ guest.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

@@ -215,7 +215,17 @@ input[type=submit] {
     background-color: lightsteelblue;
 }
 
+#guestbook {
+    font-size: small;
+    width: 28em;
+    position: relative;
+    font-family: "Comic Sans MS", serif;
+}
+
 #guest-list {
+    position: absolute;
+    top: 3.6em;
+    left: 6em;
     list-style-type: none;
-    padding-left: 0;
+    /*padding-left: 0;*/
 }
