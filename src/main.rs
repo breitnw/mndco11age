@@ -81,7 +81,7 @@ fn main() {
 
 fn handle_request(mut stream: impl Read + Write, ctx: &Context) -> Result<(), Box<dyn Error>> {
     let mut buf_reader = BufReader::new(&mut stream);
-    let buf = buf_reader.fill_buf().unwrap().to_owned();
+    let buf = buf_reader.fill_buf().unwrap_or(&Vec::new()).to_owned();
 
     let s = std::str::from_utf8(&buf).unwrap_or("");
     println!("{}", s);
