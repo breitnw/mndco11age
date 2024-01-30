@@ -91,7 +91,7 @@ fn handle_request(mut stream: impl Read + Write, ctx: &Context) -> Result<(), Bo
         return Ok(());
     }
 
-    let mut headers = [httparse::EMPTY_HEADER; 16];
+    let mut headers = [httparse::EMPTY_HEADER; 32];
     let mut req = httparse::Request::new(&mut headers);
     let status = req.parse(&buf)?;
 
