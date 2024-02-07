@@ -64,7 +64,6 @@ footer {
     margin: 1em;
     font-size: small;
     text-align: center;
-    filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(89%) contrast(91%);
 }
 
 /* NAVBAR */
@@ -101,18 +100,47 @@ nav ul {
     padding: 0 0.25rem;
 }
 
-nav a, #burger-menu a {
-    /*color: darkslategray;*/
-    /*filter: brightness(0) saturate(100%) invert(28%) sepia(6%) saturate(2577%) hue-rotate(131deg) brightness(89%) contrast(89%);*/
-    color: inherit;
-    filter: invert(66%) sepia(11%) saturate(81%) hue-rotate(21deg) brightness(70%) contrast(91%);
+footer a, nav a {
+    color: gray;
 }
 
-nav a:hover, #burger-menu a:hover {
-    /*color: antiquewhite;*/
-    /*filter: brightness(0) saturate(100%) invert(89%) sepia(3%) saturate(2240%) hue-rotate(333deg) brightness(105%) contrast(104%);*/
-    /*orangered*/
-    filter: brightness(0) saturate(100%) invert(61%) sepia(96%) saturate(5955%) hue-rotate(358deg) brightness(99%) contrast(113%);
+a:not(.card):hover {
+    -webkit-animation: rainbow 6s ease infinite;
+    -o-animation: rainbow 6s ease infinite;
+    -z-animation: rainbow 6s ease infinite;
+    animation: rainbow 6s ease infinite;
+
+    background: -webkit-linear-gradient(0deg, #e81d1d, #e8b71d, #1de840, #1ddde8, #2b1de8, #dd00f3, #ff2400);
+    -webkit-background-clip: text;
+    background-size: 900% 900%;
+
+    -webkit-text-fill-color: transparent;
+}
+
+/* ANIMATION */
+@-webkit-keyframes rainbow
+{
+    0% { background-position: 0 82%; }
+    50% { background-position: 100% 19%; }
+    100% { background-position: 0 82%; }
+}
+@-moz-keyframes rainbow
+{
+    0% { background-position: 0 82%; }
+    50% { background-position: 100% 19%; }
+    100% { background-position: 0 82%; }
+}
+@-o-keyframes rainbow
+{
+    0% { background-position: 0 82%; }
+    50% { background-position: 100% 19%; }
+    100% { background-position: 0 82%; }
+}
+@keyframes rainbow
+{
+    0% { background-position: 0 82%; }
+    50% { background-position: 100% 19%; }
+    100% { background-position: 0 82%; }
 }
 
 #burger, #burger-menu {
