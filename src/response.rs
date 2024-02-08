@@ -152,13 +152,14 @@ pub(crate) fn build_post_res(
             }
         }
         "blog-add" => {
-            if let (Some(title), Some(markdown), Some(key)) = (
+            if let (Some(title), Some(tagline), Some(markdown), Some(key)) = (
                 post_map.get("title"),
+                post_map.get("tagline"),
                 post_map.get("markdown"),
                 post_map.get("key"),
             ) {
                 if key == dotenv!("SUPER_SECRET_KEY") {
-                    db::add_article(Article::new(title, markdown)).unwrap();
+                    db::add_article(Article::new(title, tagline, markdown)).unwrap();
                 }
                 redirect("/blog", res_builder)
             } else {

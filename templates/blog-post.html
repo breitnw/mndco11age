@@ -5,6 +5,9 @@
 
 {% block contents %}
 <h1>{{ article.title }}</h1>
-<p style="color: gray"><i>{{ article.date }}</i></p>
+<p>
+    {{ article.tagline }}
+    <span style="color: gray">&nbsp;/&nbsp; <i>{{ article.date }}</i></span></p>
+<hr>
 {{ article.html|safe }}
 {% endblock %}

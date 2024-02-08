@@ -6,6 +6,7 @@ use serde::Serialize;
 #[derive(Serialize, Debug)]
 pub struct Article {
     pub title: String,
+    pub tagline: String,
     pub timestamp: i64,
     pub date: String,
     pub location: String,
@@ -14,7 +15,7 @@ pub struct Article {
 }
 
 impl Article {
-    pub fn new(title: &str, markdown: &str) -> Self {
+    pub fn new(title: &str, tagline: &str, markdown: &str) -> Self {
         // Record a timestamp based on the current time
         let timestamp = Utc::now().timestamp();
 
@@ -55,6 +56,7 @@ impl Article {
 
         Article {
             title: title.to_string(),
+            tagline: tagline.to_string(),
             timestamp,
             date: format_date(timestamp),
             location,
