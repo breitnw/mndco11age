@@ -6,7 +6,7 @@
 {% block contents %}
 {% for article in articles %}
 <div class="article-card">
-    <h1><a href="blog/{{ article.location }}">{{ article.title }}</a></h1>
+    <h1><a href="blog/{{ article.location }}"><span>{{ article.title }}</span></a></h1>
     <p style="color: gray"><i>{{ article.date }}</i></p>
     <p>{{ article.preview }}</p>
     {% if not loop.last %}

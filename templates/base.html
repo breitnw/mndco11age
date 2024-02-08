@@ -28,6 +28,8 @@
 
 		<link rel="icon" href="static/favicons/favicon.ico">
 		<link rel="stylesheet" href="static/style.css">
+		<link rel="preload" href="static/cursor.css" as="style" onload="var useThis=this;
+			useThis.onload=null; setTimeout(function(){ useThis.rel='stylesheet'; },100);">
 
 		<script src="https://kit.fontawesome.com/ca68633975.js" crossorigin="anonymous"></script>
 	</head>
@@ -35,15 +37,17 @@
 	<body>
         <div id="contents">
 			<a href="/">
-				<img src="static/images/logo.png" id="text-logo" alt="nick's cool website logo" width="500px">
+				<span>
+					<img src="static/images/logo.png" id="text-logo" alt="nick's cool website logo" width="500px">
+				</span>
 			</a>
 			<nav>
 				<a href="javascript:void(0);" id="burger" onclick="toggleBurger()"><i id="burger-icon" class="fa fa-bars"></i></a>
 				<ul id="page-navbar">
-					<li><a href="/" class="no-underline">software</a></li>
-					<li><a href="music" class="no-underline">music</a></li>
-					<li><a href="blog" class="no-underline">blog</a></li>
-					<li><a href="guestbook" class="no-underline">guestbook</a></li>
+					<li><a href="/" class="no-underline"><span>software</span></a></li>
+					<li><a href="music" class="no-underline"><span>music</span></a></li>
+					<li><a href="blog" class="no-underline"><span>blog</span></a></li>
+					<li><a href="guestbook" class="no-underline"><span>guestbook</span></a></li>
 				</ul>
 				<ul id="social-navbar">
 					<li>
@@ -65,10 +69,10 @@
 			</nav>
 			<div id="burger-menu">
 				<ul>
-					<li><a href="/" class="no-underline">software</a></li>
-					<li><a href="music" class="no-underline">music</a></li>
-					<li><a href="blog" class="no-underline">blog</a></li>
-					<li><a href="guestbook" class="no-underline">guestbook</a></li>
+					<li><a href="/" class="no-underline"><span>software</span></a></li>
+					<li><a href="music" class="no-underline"><span>music</span></a></li>
+					<li><a href="blog" class="no-underline"><span>blog</span></a></li>
+					<li><a href="guestbook" class="no-underline"><span>guestbook</span></a></li>
 				</ul>
 			</div>
             {% block contents %}{% endblock %}
@@ -78,7 +82,7 @@
 
 		<footer>
 			<a href="https://github.com/breitnw/mndco11age" target="_blank" class="no-underline">
-				<i class="fa-brands fa-github"></i> 2023 breitnw
+				<span><i class="fa-brands fa-github"></i> 2023 breitnw</span>
 			</a>
 		</footer>
 

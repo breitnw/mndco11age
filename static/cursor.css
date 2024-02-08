@@ -1,0 +1,47 @@
+:root {
+    cursor: url("cursors/normal/normal1.png");
+    -webkit-animation: cursor-normal 400ms infinite;
+    animation: cursor-normal 400ms infinite;
+}
+
+@-webkit-keyframes cursor-normal {
+    0% {cursor: url("cursors/normal/normal1.png"), auto;}
+    15% {cursor: url("cursors/normal/normal1.png"), auto;}
+    45% {cursor: url("cursors/normal/normal2.png"), auto;}
+    62% {cursor: url("cursors/normal/normal3.png"), auto;}
+    100% {cursor: url("cursors/normal/normal4.png"), auto;}
+}
+
+@keyframes cursor-normal {
+    0% {cursor: url("cursors/normal/normal1.png"), auto;}
+    15% {cursor: url("cursors/normal/normal1.png"), auto;}
+    45% {cursor: url("cursors/normal/normal2.png"), auto;}
+    62% {cursor: url("cursors/normal/normal3.png"), auto;}
+    100% {cursor: url("cursors/normal/normal4.png"), auto;}
+}
+
+a {
+    cursor: url("cursors/link/link1.png");
+}
+
+a span, .card {
+    cursor: url("cursors/link/link1.png");
+    -webkit-animation: cursor-link 400ms infinite;
+    animation: cursor-link 400ms infinite;
+}
+
+@-webkit-keyframes cursor-link {
+    0% {cursor: url("cursors/link/link1.png"), auto;}
+    15% {cursor: url("cursors/link/link1.png"), auto;}
+    45% {cursor: url("cursors/link/link2.png"), auto;}
+    62% {cursor: url("cursors/link/link3.png"), auto;}
+    100% {cursor: url("cursors/link/link4.png"), auto;}
+}
+
+@keyframes cursor-link {
+    0% {cursor: url("cursors/link/link1.png"), auto;}
+    15% {cursor: url("cursors/link/link1.png"), auto;}
+    45% {cursor: url("cursors/link/link2.png"), auto;}
+    62% {cursor: url("cursors/link/link3.png"), auto;}
+    100% {cursor: url("cursors/link/link4.png"), auto;}
+}
