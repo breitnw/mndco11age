@@ -17,9 +17,6 @@ mod response;
 use crate::context::Context;
 use crate::response::{build_get_res, build_post_res};
 
-// TODO: somehow fix cursor on blog links by inserting a span or finding another workaround
-// (idk why custom cursors don't work on <a>)
-
 fn main() {
     // Load variables from .env
     let (addr, protocol) = get_addr_protocol();
