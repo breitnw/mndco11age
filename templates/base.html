@@ -38,6 +38,7 @@
 				<img src="static/images/logo.png" id="text-logo" alt="nick's cool website logo" width="500px">
 			</a>
 			<nav>
+				<img src="static/images/chicken3.gif" id="chicken">
 				<a href="javascript:void(0);" id="burger" onclick="toggleBurger()"><i id="burger-icon" class="fa fa-bars"></i></a>
 				<ul id="page-navbar">
 					<li><a href="/" class="no-underline">software</a></li>
@@ -100,6 +101,11 @@
 				bi.classList.add("fa-bars");
 			}
 			addEventListener("resize", closeBurger);
+
+			chickens = ["chicken1.gif", "chicken2.gif", "chicken3.gif"];
+			random_chicken = chickens[Math.floor(Math.random() * chickens.length)];
+			document.getElementById("chicken")
+					.setAttribute("src", "static/images/" + random_chicken);
 		</script>
 	</body>
 </html>
