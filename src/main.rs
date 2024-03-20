@@ -56,24 +56,24 @@ fn main() {
                     pool.execute(move |ctx| match acceptor.accept(tcp_stream) {
                         Ok(ssl_stream) => {
                             if let Err(e) = handle_request(ssl_stream, ctx) {
-                                println!("Error handling request: {}", e)
+                                println!("Error handling request: {e}")
                             }
                         }
                         Err(e) => {
-                            println!("Error accepting stream: {}", e)
+                            println!("Error accepting stream: {e}")
                         }
                     });
                 } else {
                     // Otherwise, we should use HTTP
                     pool.execute(move |ctx| {
                         if let Err(e) = handle_request(tcp_stream, ctx) {
-                            println!("Error handling request: {}", e)
+                            println!("Error handling request: {e}")
                         }
                     })
                 }
             }
-            Err(_) => {
-                println!("Connection failed!");
+            Err(e) => {
+                println!("Connection failed: {e}");
             }
         }
     }
