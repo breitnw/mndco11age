@@ -17,7 +17,7 @@ mod response;
 use crate::context::Context;
 use crate::response::{build_get_res, build_post_res};
 
-fn main() {
+fn main() -> std::io::Result<()> {
     // Load variables from .env
     let (addr, protocol) = get_addr_protocol();
     let use_https = protocol == "https";
@@ -48,35 +48,30 @@ fn main() {
     println!("listening on {protocol}://{addr}");
 
     for tcp_stream in listener.incoming() {
-        match tcp_stream {
-            Ok(tcp_stream) => {
-                if let Some(acceptor) = acceptor.as_ref() {
-                    // If we have an SslAcceptor, we should use HTTPS
-                    let acceptor = acceptor.clone();
-                    pool.execute(move |ctx| match acceptor.accept(tcp_stream) {
-                        Ok(ssl_stream) => {
-                            if let Err(e) = handle_request(ssl_stream, ctx) {
-                                println!("Error handling request: {}", e)
-                            }
-                        }
-                        Err(e) => {
-                            println!("Error accepting stream: {}", e)
-                        }
-                    });
-                } else {
-                    // Otherwise, we should use HTTP
-                    pool.execute(move |ctx| {
-                        if let Err(e) = handle_request(tcp_stream, ctx) {
-                            println!("Error handling request: {}", e)
-                        }
-                    })
+        let tcp_stream = tcp_stream?;
+        if let Some(acceptor) = acceptor.as_ref() {
+            // If we have an SslAcceptor, we should use HTTPS
+            let acceptor = acceptor.clone();
+            pool.execute(move |ctx| match acceptor.accept(tcp_stream) {
+                Ok(ssl_stream) => {
+                    if let Err(e) = handle_request(ssl_stream, ctx) {
+                        println!("Error handling request: {}", e)
+                    }
                 }
-            }
-            Err(_) => {
-                println!("Connection failed!");
-            }
+                Err(e) => {
+                    println!("Error accepting stream: {}", e)
+                }
+            });
+        } else {
+            // Otherwise, we should use HTTP
+            pool.execute(move |ctx| {
+                if let Err(e) = handle_request(tcp_stream, ctx) {
+                    println!("Error handling request: {}", e)
+                }
+            })
         }
     }
+    Ok(())
 }
 
 fn handle_request(mut stream: impl Read + Write, ctx: &Context) -> Result<(), Box<dyn Error>> {
