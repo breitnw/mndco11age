@@ -4,7 +4,7 @@
 {% block description %}some articles about human things written by a human for other humans{% endblock %}
 
 {% block contents %}
-{% for article in articles %}
+{% for article in page_context.articles %}
 <div class="article-card">
     <h1><a href="blog/{{ article.location }}">{{ article.title }}</a></h1>
     <p style="color: gray"><i>{{ article.date }}</i></p>

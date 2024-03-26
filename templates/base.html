@@ -72,6 +72,12 @@
 					<li><a href="guestbook" class="no-underline">guestbook</a></li>
 				</ul>
 			</div>
+			{% if err is defined and not err is none %}
+			<div id="alert">
+				{{ err }}
+			</div>
+			{% endif %}
+
             {% block contents %}{% endblock %}
         </div>
 

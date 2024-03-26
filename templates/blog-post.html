@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}{{article.title}}{% endblock %}
-{% block description %}{{article.preview}}{% endblock %}
+{% block title %}{{page_context.article.title}}{% endblock %}
+{% block description %}{{page_context.article.preview}}{% endblock %}
 
 {% block contents %}
-<h1>{{ article.title }}</h1>
+<h1>{{ page_context.article.title }}</h1>
 <p>
-    {{ article.tagline }}
-    <span style="color: gray">&nbsp;/&nbsp; <i>{{ article.date }}</i></span></p>
+    {{ page_context.article.tagline }}
+    <span style="color: gray">&nbsp;/&nbsp; <i>{{ page_context.article.date }}</i></span></p>
 <hr>
-{{ article.html|safe }}
+{{ page_context.article.html|safe }}
 {% endblock %}

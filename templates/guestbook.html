@@ -19,7 +19,7 @@
 {% endif %}
 
 <ul id="guest-list">
-    {% for guest in guests %}
+    {% for guest in page_context.guests %}
     <li>{{ guest.name }}</li>
     {% endfor %}
 </ul>

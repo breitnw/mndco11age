@@ -14,6 +14,15 @@ body {
     margin-right: auto;
 }
 
+#alert {
+    background-color: lightsteelblue;
+    border: cornflowerblue 1px dashed;
+    border-top: none;
+    padding: 8px;
+    color: white;
+    margin-bottom: 8px;
+}
+
 #text-logo {
     width: 265px;
     max-width: 60%;

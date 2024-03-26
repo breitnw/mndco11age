@@ -13,6 +13,7 @@ mod blog;
 mod context;
 mod database;
 mod response;
+mod error;
 
 use crate::context::Context;
 use crate::response::{build_get_res, build_post_res};
@@ -132,7 +133,7 @@ fn handle_request(mut stream: impl Read + Write, ctx: &Context) -> Result<(), Bo
                 build_post_res(req, body)
             }
         }
-        Some(_) => response::redirect("405", Builder::new()),
+        Some(_) => response::redirect("405", Builder::new(), None),
         None => response::cont(),
     }?;
 

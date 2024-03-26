@@ -15,7 +15,7 @@ know how i made them.{% endblock %}
 </p>
 
 <div id="cards">
-	{% for column in columns %}
+	{% for column in page_context.columns %}
 	<div class="card-column">
 		{% for card in column %}
 		<a class="card" href="{{ card.link }}">
