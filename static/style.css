@@ -40,6 +40,10 @@ body {
     top: -34px;
 }
 
+p > img {
+    width: 100%;
+}
+
 hr {
     border-width: 1px;
     border-color: darkgray;
