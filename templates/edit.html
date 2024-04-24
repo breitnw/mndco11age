@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}edit{% endblock %}
+{% block description %}edit or add a blog post (markdown){% endblock %}
+
+{% block contents %}
+<form method="post" action="edit">
+<!--    TODO: make this code less uggo -->
+    <br>
+    {% if page_context.article is defined %}
+    <label for="title">title</label><br>
+    <input type="text" id="title" name="title" value="{{ page_context.article.title }}" required>
+    <br><br>
+    <label for="tagline">tagline</label><br>
+    <input type="text" id="tagline" name="tagline" value="{{ page_context.article.tagline }}" required>
+    <br><br>
+    <label for="markdown">markdown</label><br>
+    <textarea name="markdown" id="markdown" rows="30" cols="80" required>{{ page_context.article.markdown }}</textarea>
+    <br><br>
+    {% else %}
+    <label for="title">title</label><br>
+    <input type="text" id="title" name="title" required>
+    <br><br>
+    <label for="tagline">tagline</label><br>
+    <input type="text" id="tagline" name="tagline" required>
+    <br><br>
+    <label for="markdown">markdown</label><br>
+    <textarea name="markdown" id="markdown" rows="30" cols="80" required></textarea>
+    <br><br>
+    {% endif %}
+    <input type="checkbox" id="delete" name="delete" value="yes">
+    <label for="delete">delete the post with this title, if one exists</label>
+    <br><br>
+    <label for="key">super secret key</label><br>
+    <input type="password" id="key" name="key" required>
+    <br><br>
+    <input type="submit" value="add">
+</form>
+{% endblock %}
