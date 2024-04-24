@@ -191,15 +191,16 @@ pub(crate) fn build_post_res(
                 post_map.get("markdown"),
                 post_map.get("key"),
             ) {
-                dbg!(&post_map);
                 if key == dotenv!("SUPER_SECRET_KEY") {
                     if post_map.contains_key("delete") {
                         db::delete_article(title).unwrap();
                     } else { 
                         db::add_article(Article::new(title, tagline, markdown)).unwrap();
                     }
+                    redirect("/blog", res_builder, None)
+                } else {
+                    redirect("/blog", res_builder, Some(ClientError("wrong super secret key!")))
                 }
-                redirect("/blog", res_builder, None)
             } else {
                 println!("failed blog-add submission with body: {}", body);
                 redirect("/blog-add", res_builder, Some(ServerError("guestbook submission failed, not all required fields provided...")))
