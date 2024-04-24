@@ -38,9 +38,9 @@ pub(crate) fn build_get_res(
     
     
     // Get the parts of the URI path, split at the "/" separator
-    let path_split: Vec<_> = path.split("/").skip(1).collect();
+    let path_split: Vec<_> = path.split("/").skip(1).filter(|p| *p != "").collect();
 
-    let (template, page_context) = match path_split[0] {
+    let (template, page_context) = match *path_split.get(0).unwrap_or(&"") {
         "static" => {
             // If the first part is "static", access a static resource
             let mime_type = new_mime_guess::from_path(path).first_or(mime::TEXT_HTML);
@@ -84,7 +84,19 @@ pub(crate) fn build_get_res(
                 ),
             }
         }
-        "blog-add" => ("blog-add.html", context! { path => path }),
+        "edit" => {
+            match path_split.get(1).map(|location| db::get_article(location)) {
+                Some(Ok(article)) => (
+                    "edit.html",
+                    context! { article => article }
+                ),
+                Some(Err(_)) => error(404, path, &mut res_builder),
+                None => (
+                    "edit.html",
+                    context!()
+                )
+            }
+        }
         "guestbook" => {
             if status.is_partial() {
                 // If we have a partial response we might not have the cookies so we should wait
@@ -148,7 +160,7 @@ pub(crate) fn build_post_res(
     let path_split: Vec<_> = path.split("/").skip(1).collect();
 
     let post_map = parse_pairs(&body);
-    match path_split[0] {
+    match *path_split.get(0).unwrap_or(&"") {
         "guestbook" => {
             // If we're POSTing, add the user's name to the guestbook and set a cookie to indicate that they
             // already signed
@@ -172,15 +184,20 @@ pub(crate) fn build_post_res(
                 redirect("/guestbook", res_builder, Some(ServerError("guestbook submission failed, not all required fields provided...")))
             }
         }
-        "blog-add" => {
+        "edit" => {
             if let (Some(title), Some(tagline), Some(markdown), Some(key)) = (
                 post_map.get("title"),
                 post_map.get("tagline"),
                 post_map.get("markdown"),
                 post_map.get("key"),
             ) {
+                dbg!(&post_map);
                 if key == dotenv!("SUPER_SECRET_KEY") {
-                    db::add_article(Article::new(title, tagline, markdown)).unwrap();
+                    if post_map.contains_key("delete") {
+                        db::delete_article(title).unwrap();
+                    } else { 
+                        db::add_article(Article::new(title, tagline, markdown)).unwrap();
+                    }
                 }
                 redirect("/blog", res_builder, None)
             } else {

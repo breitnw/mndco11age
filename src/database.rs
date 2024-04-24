@@ -1,4 +1,3 @@
-use std::cmp::Ordering;
 use crate::blog::Article;
 use chrono::{DateTime, Utc};
 use rusqlite::Connection;
@@ -60,23 +59,31 @@ pub fn get_guests() -> Result<Vec<Guest>, rusqlite::Error> {
 
 pub fn add_article(article: Article) -> Result<(), rusqlite::Error> {
     let conn = Connection::open("data/db.sqlite")?;
-    conn.execute("INSERT INTO articles (title, tagline, timestamp, location, preview, html) VALUES \
-    (?1, ?2, ?3, ?4, ?5, ?6)",
-     (
-         article.title,
-         article.tagline,
-         article.timestamp,
-         article.location,
-         article.preview,
-         article.html)
-    )?;
+    conn.execute("INSERT OR REPLACE INTO articles (id, title, tagline, timestamp, location, preview, html, markdown) \
+                  VALUES ((SELECT id FROM articles WHERE title = ?1), ?1, ?2, ?3, ?4, ?5, ?6, ?7)",
+                 (
+                     article.title,
+                     article.tagline,
+                     article.timestamp,
+                     article.location,
+                     article.preview,
+                     article.html,
+                     article.markdown
+                 ))?;
+    Ok(())
+}
+
+pub fn delete_article(article_name: &str) -> Result<(), rusqlite::Error> {
+    let conn = Connection::open("data/db.sqlite")?;
+    conn.execute("DELETE FROM articles WHERE title = ?1",
+                 [article_name])?;
     Ok(())
 }
 
 pub fn get_articles() -> Result<Vec<Article>, rusqlite::Error> {
     let conn = Connection::open("data/db.sqlite")?;
     let mut stmt =
-        conn.prepare("SELECT title, tagline, timestamp, location, preview, html FROM articles")?;
+        conn.prepare("SELECT title, tagline, timestamp, location, preview, html, markdown FROM articles")?;
     let article_iter = stmt.query_map([], |row| {
         Ok(Article {
             title: row.get(0)?,
@@ -86,6 +93,7 @@ pub fn get_articles() -> Result<Vec<Article>, rusqlite::Error> {
             location: row.get(3)?,
             preview: row.get(4)?,
             html: row.get(5)?,
+            markdown: row.get(6)?,
         })
     })?;
 
@@ -100,8 +108,8 @@ pub fn get_articles() -> Result<Vec<Article>, rusqlite::Error> {
 pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
     let conn = Connection::open("data/db.sqlite")?;
     let mut stmt =
-        conn.prepare("SELECT title, tagline, timestamp, preview, html FROM articles WHERE location\
-         = (?1)")?;
+        conn.prepare("SELECT title, tagline, timestamp, preview, html, markdown FROM articles \
+                      WHERE location = (?1)")?;
     let mut html_iter = stmt.query_map([location], |row| {
         Ok(Article {
             title: row.get(0)?,
@@ -111,6 +119,7 @@ pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
             location: location.to_string(),
             preview: row.get(3)?,
             html: row.get(4)?,
+            markdown: row.get(5)?
         })
     })?;
     html_iter
