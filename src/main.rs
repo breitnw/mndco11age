@@ -61,6 +61,7 @@ fn main() {
                             }
                         }
                         Err(e) => {
+                            // This is the important one
                             println!("Error accepting stream: {e}")
                         }
                     });

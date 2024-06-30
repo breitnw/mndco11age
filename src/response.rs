@@ -165,10 +165,10 @@ pub(crate) fn build_post_res(
             // If we're POSTing, add the user's name to the guestbook and set a cookie to indicate that they
             // already signed
             if let Some(name) = post_map.get("name") {
-                if name.len() > 100 {
-                    // we don't allow messages over 100 characters
-                    return redirect("/guestbook", res_builder, Some(ClientError("your message is too long! please keep it at 100 characters or less.")));
-                }
+                // if name.len() > 100 {
+                //     // we don't allow messages over 100 characters
+                //     return redirect("/guestbook", res_builder, Some(ClientError("your message is too long! please keep it at 100 characters or less.")));
+                // }
                 match db::add_guest(name) {
                     Ok(()) => {
                         res_builder.header(header::SET_COOKIE, "sign-disabled=true");

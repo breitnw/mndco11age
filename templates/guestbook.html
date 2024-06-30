@@ -18,9 +18,37 @@
 </form>
 {% endif %}
 
+<script>
+    function showMore(guest) {
+        const guestIdx = parseInt(guest);
+        let li = document.getElementById("guest-list").children[guestIdx];
+        li.childNodes.forEach((n) => {
+            console.log(n)
+            switch (n.className) {
+                case "more":
+                    n.style.display = "inline"
+                    break;
+                case "link":
+                    n.style.display = "none"
+                    break;
+            }
+        })
+    }
+</script>
+
 <ul id="guest-list">
     {% for guest in page_context.guests %}
-    <li>{{ guest.name }}</li>
+    <li>
+        {% if guest.name|length > 100 %}
+        {{ guest.name[:100] }}<span class="more" style="display:none;">{{ guest.name[100:] }}</span>
+        <a class="link" href="javascript:showMore('{{loop.index - 1}}')">
+            <small>more...</small>
+        </a>
+        {% else %}
+        {{ guest.name }}
+        {% endif %}
+    </li>
     {% endfor %}
 </ul>
+
 {% endblock %}
