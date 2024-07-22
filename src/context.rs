@@ -1,4 +1,3 @@
-use crate::get_addr_protocol;
 use dotenv_codegen::dotenv;
 use include_dir::{include_dir, Dir};
 use minijinja::{Environment, Source};
@@ -12,14 +11,12 @@ pub(crate) struct Context<'a> {
 
 impl<'a> Context<'a> {
     pub fn new() -> Self {
-        let (_, protocol) = get_addr_protocol();
-
         // Add minijinja templates to the environment
         let mut jinja_env = Environment::new();
         jinja_env.set_source(Source::from_path("templates"));
         jinja_env.add_global(
             "BASE_URL",
-            format!("{}://{}", protocol, dotenv!("STATIC_HOST")),
+            dotenv!("STATIC_HOST"),
         );
 
         // Parse data for cards
