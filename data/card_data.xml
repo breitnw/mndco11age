@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cards>
     <card>
+        <link>https://jot.mndco11age.xyz</link>
+        <image_src>/static/images/demos/jot.png</image_src>
+        <name>jot</name>
+        <description>
+            A note-taking app for your fleeting thoughts, started during WildHacks 2025.
+        </description>
+    </card>
+    <card>
         <link>https://github.com/breitnw/rhyolite</link>
         <image_src>/static/images/demos/rhyolite.gif</image_src>
         <name>rhyolite</name>
         <description>
-            A bare-bones rendering engine built with Vulkano (in-progress)
+            A bare-bones rendering engine built with Vulkano
         </description>
     </card>
     <card>

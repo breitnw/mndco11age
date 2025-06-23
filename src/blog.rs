@@ -12,7 +12,7 @@ pub struct Article {
     pub location: String,
     pub preview: String,
     pub html: String,
-    pub markdown: String
+    pub markdown: String,
 }
 
 impl Article {
@@ -63,7 +63,7 @@ impl Article {
             location,
             preview,
             html,
-            markdown: markdown.to_string()
+            markdown: markdown.to_string(),
         }
     }
 }
