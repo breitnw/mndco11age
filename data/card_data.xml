@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cards>
     <card>
+        <link>https://github.com/breitnw/micromusic</link>
+        <image_src>/static/images/demos/micromusic.gif</image_src>
+        <name>micromusic</name>
+        <description>
+            A tiny miniplayer and queue manager for Apple Music, written in Rust with SDL2
+        </description>
+    </card>
+    <card>
         <link>https://jot.mndco11age.xyz</link>
         <image_src>/static/images/demos/jot.png</image_src>
         <name>jot</name>
         <description>
-            A note-taking app for your fleeting thoughts, started during WildHacks 2025.
+            A note-taking app for your fleeting thoughts, started during WildHacks 2025
         </description>
     </card>
     <card>
@@ -13,7 +21,7 @@
         <image_src>/static/images/demos/rhyolite.gif</image_src>
         <name>rhyolite</name>
         <description>
-            A bare-bones rendering engine built with Vulkano
+            A bare-bones rendering engine built with Vulkano, supporting traditional and ray-marched rendering modes
         </description>
     </card>
     <card>
@@ -23,40 +31,6 @@
         <description>
             A social media platform encouraging environmental sustainability through healthy competition and social interaction.
             Created by Parker Hitchcock, Katriana Trinh, and Nick Breitling for Tonka Hacks 2022
-        </description>
-    </card>
-    <card>
-        <link>https://github.com/breitnw/gatsby</link>
-        <image_src>/static/images/demos/gatsby.gif</image_src>
-        <name>gatsby</name>
-        <description>
-            A clicker game based on the book The Great Gatsby, made collaboratively by Nick Breitling and Luke
-            Williams for our final AP Language &amp; Composition project
-        </description>
-    </card>
-    <card>
-        <link>https://github.com/breitnw/micromusic</link>
-        <image_src>/static/images/demos/micromusic.gif</image_src>
-        <name>micromusic</name>
-        <description>
-            A tiny miniplayer for Apple Music written in Rust with SDL2
-        </description>
-    </card>
-    <card>
-        <link>https://github.com/breitnw/cellular_automata</link>
-        <image_src>/static/images/demos/cellular_automata.gif</image_src>
-        <name>cellular_automata</name>
-        <description>
-            A basic cellular automata simulator written in Java with JFrame (I didn't know how to use shaders when
-            I wrote this so it's pretty slow)
-        </description>
-    </card>
-    <card>
-        <link>https://github.com/breitnw/checkers</link>
-        <image_src>/static/images/demos/checkers.png</image_src>
-        <name>checkers</name>
-        <description>
-            A terminal-playable version of checkers created for the 2022 AP CSP Create Task
         </description>
     </card>
     <card>
@@ -74,6 +48,32 @@
         <name>game3</name>
         <description>
             A little experiment from a while back, made in pygame
+        </description>
+    </card>
+    <card>
+        <link>https://github.com/breitnw/gatsby</link>
+        <image_src>/static/images/demos/gatsby.gif</image_src>
+        <name>gatsby</name>
+        <description>
+            A clicker game based on the book The Great Gatsby, made collaboratively by Nick Breitling and Luke
+            Williams for our final AP Language &amp; Composition project
+        </description>
+    </card>
+    <card>
+        <link>https://github.com/breitnw/cellular_automata</link>
+        <image_src>/static/images/demos/cellular_automata.gif</image_src>
+        <name>cellular_automata</name>
+        <description>
+            A basic cellular automata simulator written in Java with JFrame (I didn't know how to use shaders when
+            I wrote this so it's pretty slow)
+        </description>
+    </card>
+    <card>
+        <link>https://github.com/breitnw/checkers</link>
+        <image_src>/static/images/demos/checkers.png</image_src>
+        <name>checkers</name>
+        <description>
+            A terminal-playable version of checkers created for the 2022 AP CSP Create Task
         </description>
     </card>
     <card>
