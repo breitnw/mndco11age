@@ -1,36 +1,37 @@
 {% extends 'base.html' %}
 
 {% block title %}software | NICK'S COOL WEBSITE{% endblock %}
-{% block description %}i do some software development and graphics research in my free
-time and for school (cs major @ neu). you can find some of my favorite projects i've done
-below. all are free and open source and on my github too if you're weird like me and wanna
-know how i made them.{% endblock %}
+{% block description %}
+i do some software development and research in my free time and
+for school (cs major @ northwestern). my main interest areas are graphics and programming
+languages! you can find some of my favorite projects i've done below; all are free and
+open source and on my github too if you're weird like me and wanna know how i made them.
+{% endblock %}
 
 {% block contents %}
 <p>
-	i do some software development and graphics research in my free time and for school
-	(cs major @ northwestern). you can find some of my favorite projects i've done below. 
-  all are free and open source and on my github too if you're weird like me and wanna know how
-	i made them:
+	i do some software development and research in my free time and
+	for school (cs major @ northwestern). my main interest areas are graphics and programming
+	languages! you can find some of my favorite projects i've done below; all are free and
+	open source and on my github too if you're weird like me and wanna know how i made them.
 </p>
 
-<div id="cards">
-	{% for column in page_context.columns %}
-	<div class="card-column">
-		{% for card in column %}
-		<a class="card" href="{{ card.link }}">
+<div class="masonry">
+	{% for card in page_context.cards %}
+	<a class="card" href="{{ card.link }}">
+		<div class="contents">
 			<img src="{{ card.image_src }}" alt="{{ card.name }}">
-			<div class="container">
+			<div class="card-text">
 				<h4><b>{{ card.name }}</b></h4>
 				<p>{{ card.description }}</p>
 			</div>
-		</a>
-		{% endfor %}
-	</div>
+		</div>
+	</a>
 	{% endfor %}
 </div>
+
 <br>
-<p style="font-size: small">
-	***i made this server from scratch in rust so loading might be a lil iffy oops
-</p>
+
+<script type="text/javascript" src="static/masonry.js"></script>
+
 {% endblock %}
