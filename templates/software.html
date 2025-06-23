@@ -20,7 +20,9 @@ open source and on my github too if you're weird like me and wanna know how i ma
 	{% for card in page_context.cards %}
 	<a class="card" href="{{ card.link }}">
 		<div class="contents">
-			<img src="{{ card.image_src }}" alt="{{ card.name }}">
+			<div class="img-box">
+				<img src="{{ card.image_src }}" alt="{{ card.name }}">
+			</div>
 			<div class="card-text">
 				<h4><b>{{ card.name }}</b></h4>
 				<p>{{ card.description }}</p>

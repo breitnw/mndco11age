@@ -4,6 +4,6 @@
 # TODO automatically convert from mp4 too
 
 for f in demos/*.gif; do
-    gifsicle -i "$f" --optimize=3 --colors 128 --resize-fit-width 200 -o "static/images/$f";
+    gifsicle -i "$f" --optimize=3 --colors 255 --resize-fit-width 300 -o "static/images/$f";
     echo "optimized $f"
 done
