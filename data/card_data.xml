@@ -78,8 +78,8 @@
         </description>
     </card>
     <card>
-        <link>/static/images/demos/square_game.gif</link>
-        <image_src>https://raw.githubusercontent.com/breitnw/square_game/main/screenshots/demo.gif</image_src>
+        <link>https://github.com/breitnw/square_game</link>
+        <image_src>/static/images/demos/square_game.gif</image_src>
         <name>square_game</name>
         <description>
             An optimal square game solver (gui-based); Northeastern CS1800 Acc. Discrete Structures
