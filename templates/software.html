@@ -19,8 +19,11 @@ open source and on my github too if you're weird like me and wanna know how i ma
 <div class="masonry">
 	{% for card in page_context.cards %}
 	<a class="card" href="{{ card.link }}">
-		<div class="contents">
+		<div class="card-contents">
 			<div class="img-box">
+				<div class="loading-animation">
+					<span class="loader"></span>
+				</div>
 				<img src="{{ card.image_src }}" alt="{{ card.name }}">
 			</div>
 			<div class="card-text">
