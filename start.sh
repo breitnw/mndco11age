@@ -11,5 +11,4 @@ tmux rename-window -t $session:$window 'run'
 tmux send-keys -t $session:$window "sudo target/release/mndco11age" C-m
 
 
-echo "HTTPS server running on port 443"
-
+echo "HTTP server running"
