@@ -1,5 +1,7 @@
 use crate::blog::Article;
 use crate::database as db;
+use crate::error::HttpError;
+use crate::error::HttpError::{ClientError, ServerError};
 use crate::Context;
 use dotenv_codegen::dotenv;
 use http_bytes::http::response::Builder;
@@ -7,8 +9,6 @@ use http_bytes::http::{header, Error, Response};
 use minijinja::{context, Environment};
 use std::collections::HashMap;
 use std::fs;
-use crate::error::HttpError;
-use crate::error::HttpError::{ClientError, ServerError};
 
 /// Builds an HTTP response to a given request. returns an Err() if a response cannot be built from the response builder;
 /// i.e., if `res_builder.body(_)` fails.
@@ -30,20 +30,21 @@ pub(crate) fn build_get_res(
             return cont();
         }
     };
-    
+
     // separate path and query
     let (path, query) = path.split_once("?").unwrap_or((path, ""));
     let query = parse_pairs(query);
     let err = query.get("err");
-    
-    
+
     // Get the parts of the URI path, split at the "/" separator
-    let path_split: Vec<_> = path.split("/").skip(1).filter(|p| *p != "").collect();
+    let path_split: Vec<_> =
+        path.split("/").skip(1).filter(|p| *p != "").collect();
 
     let (template, page_context) = match *path_split.get(0).unwrap_or(&"") {
         "static" => {
             // If the first part is "static", access a static resource
-            let mime_type = new_mime_guess::from_path(path).first_or(mime::TEXT_HTML);
+            let mime_type =
+                new_mime_guess::from_path(path).first_or(mime::TEXT_HTML);
             if let Ok(file_contents) = fs::read(&path[1..]) {
                 return res_builder
                     .header(header::CONTENT_TYPE, mime_type.essence_str())
@@ -56,25 +57,15 @@ pub(crate) fn build_get_res(
         }
         "" => {
             let cards = &ctx.cards;
-            let column_length = (cards.len() + 1) / 3;
-
-            let ctx = context! {
-                columns => vec![
-                    &cards[..column_length],
-                    &cards[column_length..2 * column_length],
-                    &cards[2 * column_length..]
-                ]
-            };
-            ("software.html", ctx)
+            ("software.html", context! { cards })
         }
         "music" => ("music.html", context! {}),
         "blog" => {
             match path_split.get(1).map(|location| db::get_article(location)) {
                 // If there is a valid second part to the path, get the corresponding article
-                Some(Ok(article)) => (
-                    "blog-post.html",
-                    context! { article => article },
-                ),
+                Some(Ok(article)) => {
+                    ("blog-post.html", context! { article => article })
+                }
                 // If there's a second part but it's invalid, return 404
                 Some(Err(_)) => error(404, path, &mut res_builder),
                 // If there's not a second part, return the blog homepage
@@ -86,15 +77,11 @@ pub(crate) fn build_get_res(
         }
         "edit" => {
             match path_split.get(1).map(|location| db::get_article(location)) {
-                Some(Ok(article)) => (
-                    "edit.html",
-                    context! { article => article }
-                ),
+                Some(Ok(article)) => {
+                    ("edit.html", context! { article => article })
+                }
                 Some(Err(_)) => error(404, path, &mut res_builder),
-                None => (
-                    "edit.html",
-                    context!()
-                )
+                None => ("edit.html", context!()),
             }
         }
         "guestbook" => {
@@ -103,7 +90,9 @@ pub(crate) fn build_get_res(
                 return cont();
             }
             let sign_disabled: bool = {
-                if let Some(&cookie) = req.headers.iter().find(|h| h.name == "Cookie") {
+                if let Some(&cookie) =
+                    req.headers.iter().find(|h| h.name == "Cookie")
+                {
                     let cookie_str = std::str::from_utf8(cookie.value);
                     cookie_str.is_ok_and(|s| s.contains("sign-disabled=true"))
                 } else {
@@ -124,18 +113,19 @@ pub(crate) fn build_get_res(
         }
         _ => error(404, path, &mut res_builder),
     };
-    
+
     let jinja_context = context! {
         page_context => page_context,
         path => path,
         err => err
     };
-    
-    let body = to_bytes(template, jinja_context, &ctx.jinja_env).unwrap_or_else(|_| {
-        // We need to use a closure since error mutates state
-        let (template, context) = error(500, path, &mut res_builder);
-        to_bytes(template, context, &ctx.jinja_env).unwrap()
-    });
+
+    let body = to_bytes(template, jinja_context, &ctx.jinja_env)
+        .unwrap_or_else(|_| {
+            // We need to use a closure since error mutates state
+            let (template, context) = error(500, path, &mut res_builder);
+            to_bytes(template, context, &ctx.jinja_env).unwrap()
+        });
     return res_builder
         .header(header::CONTENT_TYPE, mime::TEXT_HTML.essence_str())
         .header(header::CONTENT_LENGTH, body.len())
@@ -171,14 +161,16 @@ pub(crate) fn build_post_res(
                 // }
                 match db::add_guest(name) {
                     Ok(()) => {
-                        res_builder.header(header::SET_COOKIE, "sign-disabled=true");
+                        res_builder
+                            .header(header::SET_COOKIE, "sign-disabled=true");
                         redirect("/guestbook", res_builder, None)
                     }
-                    Err(e) => {
-                        redirect("/guestbook", res_builder, Some(ServerError(&e.to_string())))
-                    }
+                    Err(e) => redirect(
+                        "/guestbook",
+                        res_builder,
+                        Some(ServerError(&e.to_string())),
+                    ),
                 }
-                
             } else {
                 println!("failed guestbook submission with body: {}", body);
                 redirect("/guestbook", res_builder, Some(ServerError("guestbook submission failed, not all required fields provided...")))
@@ -194,12 +186,17 @@ pub(crate) fn build_post_res(
                 if key == dotenv!("SUPER_SECRET_KEY") {
                     if post_map.contains_key("delete") {
                         db::delete_article(title).unwrap();
-                    } else { 
-                        db::add_article(Article::new(title, tagline, markdown)).unwrap();
+                    } else {
+                        db::add_article(Article::new(title, tagline, markdown))
+                            .unwrap();
                     }
                     redirect("/blog", res_builder, None)
                 } else {
-                    redirect("/blog", res_builder, Some(ClientError("wrong super secret key!")))
+                    redirect(
+                        "/blog",
+                        res_builder,
+                        Some(ClientError("wrong super secret key!")),
+                    )
                 }
             } else {
                 println!("failed blog-add submission with body: {}", body);
@@ -212,13 +209,13 @@ pub(crate) fn build_post_res(
 
 /// Returns a redirect request to the specified endpoint
 pub(crate) fn redirect<'a>(
-    endpoint: &str, 
-    mut builder: Builder, 
-    err: Option<HttpError<'a>>
+    endpoint: &str,
+    mut builder: Builder,
+    err: Option<HttpError<'a>>,
 ) -> Result<Response<Vec<u8>>, Error> {
     let url = match err {
         Some(e) => format!("{}?{}", endpoint, e.to_query()),
-        _ => endpoint.to_owned()
+        _ => endpoint.to_owned(),
     };
     builder
         .status(303)

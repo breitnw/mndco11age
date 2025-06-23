@@ -17,9 +17,7 @@ open source and on my github too if you're weird like me and wanna know how i ma
 </p>
 
 <div class="masonry">
-	{% for column in page_context.columns %}
-	<!-- <div class="card-column"> -->
-	{% for card in column %}
+	{% for card in page_context.cards %}
 	<a class="card" href="{{ card.link }}">
 		<div class="contents">
 			<img src="{{ card.image_src }}" alt="{{ card.name }}">
@@ -29,8 +27,6 @@ open source and on my github too if you're weird like me and wanna know how i ma
 			</div>
 		</div>
 	</a>
-	{% endfor %}
-	<!-- </div> -->
 	{% endfor %}
 </div>
 
