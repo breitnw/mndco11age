@@ -2,7 +2,7 @@
 <cards>
     <card>
         <link>https://github.com/breitnw/rhyolite</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/210491738-b8defba2-e8f9-419f-a428-a89a1e326a55.gif</image_src>
+        <image_src>/static/images/demos/rhyolite.gif</image_src>
         <name>rhyolite</name>
         <description>
             A bare-bones rendering engine built with Vulkano (in-progress)
@@ -10,7 +10,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/CommuniTree</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/201558966-87f64e81-a6d5-4efb-a8cd-040bc6d40c5c.gif</image_src>
+        <image_src>/static/images/demos/communitree.gif</image_src>
         <name>communitree</name>
         <description>
             A social media platform encouraging environmental sustainability through healthy competition and social interaction.
@@ -19,7 +19,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/gatsby</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/235373802-33715efa-5e82-45c6-b4c2-8db8d3c58095.gif</image_src>
+        <image_src>/static/images/demos/gatsby.gif</image_src>
         <name>gatsby</name>
         <description>
             A clicker game based on the book The Great Gatsby, made collaboratively by Nick Breitling and Luke
@@ -28,7 +28,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/micromusic</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/210676224-7c595c26-bee1-4359-b41a-eeaf79173818.gif</image_src>
+        <image_src>/static/images/demos/micromusic.gif</image_src>
         <name>micromusic</name>
         <description>
             A tiny miniplayer for Apple Music written in Rust with SDL2
@@ -36,7 +36,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/cellular_automata</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/235373305-7ccddf03-b6c0-4da8-b8db-6a57df2708ff.gif</image_src>
+        <image_src>/static/images/demos/cellular_automata.gif</image_src>
         <name>cellular_automata</name>
         <description>
             A basic cellular automata simulator written in Java with JFrame (I didn't know how to use shaders when
@@ -45,7 +45,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/checkers</link>
-        <image_src>https://github.com/breitnw/checkers/raw/master/screenshots/normal.png?raw=true</image_src>
+        <image_src>/static/images/demos/checkers.png</image_src>
         <name>checkers</name>
         <description>
             A terminal-playable version of checkers created for the 2022 AP CSP Create Task
@@ -53,7 +53,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/ha_project</link>
-        <image_src>https://github.com/breitnw/ha_project/blob/master/resources/demo.gif?raw=true</image_src>
+        <image_src>/static/images/demos/ha_project.gif</image_src>
         <name>ha_project</name>
         <description>
             Utilities to aid in data management for The Humanity Alliance, a Minnesota-based 501(c)(3) non-profit
@@ -62,7 +62,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/game3</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/235372486-26871873-4f40-4151-a15f-93e7ecab3e9b.gif</image_src>
+        <image_src>/static/images/demos/game3.gif</image_src>
         <name>game3</name>
         <description>
             A little experiment from a while back, made in pygame
@@ -70,7 +70,7 @@
     </card>
     <card>
         <link>https://github.com/breitnw/mndco11age</link>
-        <image_src>https://user-images.githubusercontent.com/29758429/235374116-df02f485-57c4-4ba5-a5a0-9c11937dbbd3.gif</image_src>
+        <image_src>/static/images/demos/mndco11age.gif</image_src>
         <name>mndco11age</name>
         <description>
             The website you're looking at right now! Runs on an HTTPS server built (pretty much) from scratch
@@ -78,7 +78,7 @@
         </description>
     </card>
     <card>
-        <link>https://github.com/breitnw/square_game</link>
+        <link>/static/images/demos/square_game.gif</link>
         <image_src>https://raw.githubusercontent.com/breitnw/square_game/main/screenshots/demo.gif</image_src>
         <name>square_game</name>
         <description>
