@@ -25,7 +25,8 @@ function resizeInstance(instance){
 window.addEventListener("resize", resizeAllGridItems);
 window.addEventListener("load", resizeAllGridItems);
 
-// allItems = document.getElementsByClassName("card");
-// for(x=0;x<allItems.length;x++){
-//   imagesLoaded( allItems[x], resizeInstance);
-// }
+// also resize incrementally on load
+allItems = document.getElementsByClassName("card");
+for(x=0;x<allItems.length;x++){
+  imagesLoaded(allItems[x], resizeInstance);
+}
