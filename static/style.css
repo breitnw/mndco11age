@@ -1,10 +1,32 @@
 html {
-    background: #e3e1d8 url(/static/images/background.jpg);
-    background-size: 600px;
+    /* background: #e3e1d8 url(/static/images/background.jpg); */
+    background: #e3e1d8 url(/static/images/nnnoise-white.svg);
+    /* background-size: 600px; */
+
+    --palette-green-light: #d4dace;
+    --palette-green-dark: #7ec47ba9;
+    --palette-green-texture: url(/static/images/nnnoise-green.svg);
+
+    --palette-red-light: #d4aeab;
+    --palette-red-dark: #996e6bc9;
+    --palette-red-texture: url(/static/images/nnnoise-red.svg);
+
+    --palette-blue-light: #abbdcb;
+    --palette-blue-dark: #5081a9c9;
+    --palette-blue-texture: url(/static/images/nnnoise-blue.svg);
+
+    --palette-yellow-light: #e0d089;
+    --palette-yellow-dark: #d2b42fc9;
+    --palette-yellow-texture: url(/static/images/nnnoise-yellow.svg);
+
+    --palette-beige-light: #b5aca1;
+    --palette-beige-dark: #938677c9;
+    --palette-beige-texture: url(/static/images/nnnoise-beige.svg);
+
 }
 
 body {
-    font-family: Helvetica Neue, sans-serif;
+    font-family: serif;
 }
 
 #contents {
@@ -27,6 +49,12 @@ body {
 #text-logo {
     width: 265px;
     max-width: 60%;
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+}
+
+#text-logo:hover {
+    scale: 1.08 0.96;
 }
 
 #mado {
@@ -48,22 +76,22 @@ p > img {
 hr {
     border-width: 1px;
     border-color: darkgray;
-    border-style: dotted;
+    border-style: dashed;
 }
 
-#folders > div {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    font-family: monospace;
-}
+/* #folders > div { */
+/*     position: relative; */
+/*     display: inline-block; */
+/*     text-align: center; */
+/*     font-family: monospace; */
+/* } */
 
-#folders > div > a > img {
-    width: 50px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+/* #folders > div > a > img { */
+/*     width: 50px; */
+/*     display: block; */
+/*     margin-left: auto; */
+/*     margin-right: auto; */
+/* } */
 
 .mono {
     font-family: monospace;
@@ -224,23 +252,58 @@ a:not(.card):hover {
     grid-auto-rows: 5px;
 }
 
+.card.green {
+    --palette-light: var(--palette-green-light);
+    --palette-dark: var(--palette-green-dark);
+    --palette-texture: var(--palette-green-texture);
+}
+
+.card.beige {
+    --palette-light: var(--palette-beige-light);
+    --palette-dark: var(--palette-beige-dark);
+    --palette-texture: var(--palette-beige-texture);
+}
+
+.card.red {
+    --palette-light: var(--palette-red-light);
+    --palette-dark: var(--palette-red-dark);
+    --palette-texture: var(--palette-red-texture);
+}
+
+.card.yellow {
+    --palette-light: var(--palette-yellow-light);
+    --palette-dark: var(--palette-yellow-dark);
+    --palette-texture: var(--palette-yellow-texture);
+}
+
+.card.blue {
+    --palette-light: var(--palette-blue-light);
+    --palette-dark: var(--palette-blue-dark);
+    --palette-texture: var(--palette-blue-texture);
+}
+
 .card {
+    overflow: hidden;
     box-sizing: border-box;
     text-decoration: none;
     transition: 0.2s;
-    color: dimgray;
-    background-color: whitesmoke;
-    border: 4px outset gainsboro;
+    background: white url(/static/images/nnnoise-white.svg);
+    /* border: 4px outset var(--palette-light); */
+    border: 3px outset gainsboro;
+    border-radius: 5px;
+    /* box-shadow: 0 0 8px 0 rgba(0,0,0,0.1); */
 }
 
 .card .img-box {
     padding: 15px;
-    background-color: white;
+    background: white var(--palette-texture);
 }
 
 .card img, .card .loading-animation {
     box-sizing: border-box;
     border: 3px inset gainsboro;
+    /* border: 4px inset var(--palette-light); */
+    /* border-radius: 5px; */
     width: 100%;
     background-color: lightgray;
 }
@@ -274,6 +337,25 @@ a:not(.card):hover {
   animation: flash 0.5s ease-out infinite alternate;
 }
 
+.card .sep {
+    --edge-height: 9px;
+    clip-path: polygon(
+        100% 0,
+        0 0,
+        0 var(--edge-height),
+        16.66% 0,
+        33.33% var(--edge-height),
+        50% 0,
+        66.66% var(--edge-height),
+        83.33% 0,
+        100% var(--edge-height)
+    );
+    background: white var(--palette-texture);
+    height: 13px;
+    width: 100%;
+    display: block;
+}
+
 @keyframes flash {
   0% {
     background-color: darkgray;
@@ -304,17 +386,20 @@ a:not(.card):hover {
     padding: 8px 16px;
 }
 
-.card-text h4 {
+.card h4 {
+    text-shadow: 0 0 1px rgba(0,0,0,.6);
     font-family: monospace;
-    color: darkgray;
-    font-size: small;
-    text-transform: uppercase;
-    margin: 0.8em 0;
+    color: var(--palette-dark);
+    font-size: regular;
+    /* text-transform: uppercase; */
+    margin: 1rem 0 0 0;
+    letter-spacing: 1px;
 }
 
-.card-text p {
-    margin-top: 0;
-    font-size: small;
+.card p {
+    margin-top: 0.5;
+    color: dimgray;
+    font-size: smaller;
 }
 
 /* GUESTBOOK */

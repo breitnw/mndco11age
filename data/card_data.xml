@@ -7,6 +7,7 @@
         <description>
             A tiny miniplayer and queue manager for Apple Music, written in Rust with SDL2
         </description>
+        <color>green</color>
     </card>
     <card>
         <link>https://jot.mndco11age.xyz</link>
@@ -15,6 +16,7 @@
         <description>
             A note-taking app for your fleeting thoughts, started during WildHacks 2025
         </description>
+        <color>red</color>
     </card>
     <card>
         <link>https://github.com/breitnw/rhyolite</link>
@@ -23,6 +25,7 @@
         <description>
             A bare-bones rendering engine built with Vulkano, supporting traditional and ray-marched rendering modes
         </description>
+        <color>blue</color>
     </card>
     <card>
         <link>https://github.com/breitnw/CommuniTree</link>
@@ -32,6 +35,7 @@
             A social media platform encouraging environmental sustainability through healthy competition and social interaction.
             Created by Parker Hitchcock, Katriana Trinh, and Nick Breitling for Tonka Hacks 2022
         </description>
+        <color>yellow</color>
     </card>
     <card>
         <link>https://github.com/breitnw/ha_project</link>
@@ -41,6 +45,7 @@
             Utilities to aid in data management for The Humanity Alliance, a Minnesota-based 501(c)(3) non-profit
             that aspires to create long-lasting community value
         </description>
+        <color>green</color>
     </card>
     <card>
         <link>https://github.com/breitnw/game3</link>
@@ -49,6 +54,7 @@
         <description>
             A little experiment from a while back, made in pygame
         </description>
+        <color>red</color>
     </card>
     <card>
         <link>https://github.com/breitnw/gatsby</link>
@@ -58,6 +64,7 @@
             A clicker game based on the book The Great Gatsby, made collaboratively by Nick Breitling and Luke
             Williams for our final AP Language &amp; Composition project
         </description>
+        <color>blue</color>
     </card>
     <card>
         <link>https://github.com/breitnw/cellular_automata</link>
@@ -67,6 +74,7 @@
             A basic cellular automata simulator written in Java with JFrame (I didn't know how to use shaders when
             I wrote this so it's pretty slow)
         </description>
+        <color>red</color>
     </card>
     <card>
         <link>https://github.com/breitnw/checkers</link>
@@ -75,6 +83,7 @@
         <description>
             A terminal-playable version of checkers created for the 2022 AP CSP Create Task
         </description>
+        <color>yellow</color>
     </card>
     <card>
         <link>https://github.com/breitnw/mndco11age</link>
@@ -84,6 +93,7 @@
             The website you're looking at right now! Runs on an HTTPS server built (pretty much) from scratch
             with Rust and OpenSSL
         </description>
+        <color>green</color>
     </card>
     <card>
         <link>https://github.com/breitnw/square_game</link>
@@ -92,5 +102,6 @@
         <description>
             An optimal square game solver (gui-based); Northeastern CS1800 Acc. Discrete Structures
         </description>
+        <color>yellow</color>
     </card>
 </cards>

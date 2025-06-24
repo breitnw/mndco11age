@@ -16,18 +16,25 @@ open source and on my github too if you're weird like me and wanna know how i ma
 	open source and on my github too if you're weird like me and wanna know how i made them.
 </p>
 
+<p style="font-size:x-small;color:gray">
+P.S. i do apologize if this website is a bit of an assault on the senses... i kinda like it that way...
+</p>
+
+<br>
+
 <div class="masonry">
 	{% for card in page_context.cards %}
-	<a class="card" href="{{ card.link }}">
+	<a class="card {{ card.color }}" href="{{ card.link }}">
 		<div class="card-contents">
 			<div class="img-box">
 				<div class="loading-animation">
 					<span class="loader"></span>
 				</div>
 				<img src="{{ card.image_src }}" alt="{{ card.name }}">
-			</div>
-			<div class="card-text">
 				<h4><b>{{ card.name }}</b></h4>
+			</div>
+			<div class="sep"></div>
+			<div class="card-text">
 				<p>{{ card.description }}</p>
 			</div>
 		</div>

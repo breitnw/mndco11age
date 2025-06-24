@@ -14,10 +14,7 @@ impl<'a> Context<'a> {
         // Add minijinja templates to the environment
         let mut jinja_env = Environment::new();
         jinja_env.set_source(Source::from_path("templates"));
-        jinja_env.add_global(
-            "BASE_URL",
-            dotenv!("STATIC_HOST"),
-        );
+        jinja_env.add_global("BASE_URL", dotenv!("STATIC_HOST"));
 
         // Parse data for cards
         const DATA_DIR: Dir = include_dir!("data");
@@ -39,6 +36,7 @@ pub struct Card {
     image_src: String,
     name: String,
     description: String,
+    color: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
