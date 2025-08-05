@@ -413,11 +413,12 @@ input[type=submit] {
 
 td {
     padding: 0;
-    padding-right: 10px;
+    padding-right: 15px;
     vertical-align: top;
 }
 
 #guest-list {
+    margin: 10px 0px;
     vertical-align: top;
     text-align: left;
     list-style-type: none;

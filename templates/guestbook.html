@@ -29,9 +29,9 @@
 <table id="guest-list">
     {% for guest in page_context.guests %}
     <tr>
-        <td>
-            <small><i style="color:gray;">{{ guest.date }}</i></small>
-        </td>
+        <!-- <td>
+             <small><i style="color:gray;">{{ guest.date }}</i></small>
+             </td> -->
         <td>
             {% if guest.name|length > 100 %}
             {{ guest.name[:100] }}<span id="more-{{loop.index - 1}}" style="display:none;">{{ guest.name[100:] }}</span>

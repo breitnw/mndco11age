@@ -89,16 +89,12 @@ pub(crate) fn build_get_res(
                 // If we have a partial response we might not have the cookies so we should wait
                 return cont();
             }
-            let sign_disabled: bool = {
-                if let Some(&cookie) =
-                    req.headers.iter().find(|h| h.name == "Cookie")
-                {
-                    let cookie_str = std::str::from_utf8(cookie.value);
-                    cookie_str.is_ok_and(|s| s.contains("sign-disabled=true"))
-                } else {
-                    false
-                }
-            };
+            let sign_disabled = req
+                .headers
+                .iter()
+                .find(|h| h.name == "Cookie")
+                .map(|c| std::str::from_utf8(c.value).is_ok_and(|s| s.contains("sign-disabled=true")))
+                .unwrap_or(false);
             (
                 "guestbook.html",
                 context! {
@@ -155,10 +151,21 @@ pub(crate) fn build_post_res(
             // If we're POSTing, add the user's name to the guestbook and set a cookie to indicate that they
             // already signed
             if let Some(name) = post_map.get("name") {
-                // if name.len() > 100 {
-                //     // we don't allow messages over 100 characters
-                //     return redirect("/guestbook", res_builder, Some(ClientError("your message is too long! please keep it at 100 characters or less.")));
-                // }
+                if name.len() == 0 {
+                    return redirect("/guestbook", res_builder, Some(ClientError(
+                        "guestbook submission failed, please enter a name!")))
+                }
+                let sign_disabled = req
+                    .headers
+                    .iter()
+                    .find(|h| h.name == "Cookie")
+                    .map(|c| std::str::from_utf8(c.value).is_ok_and(|s| s.contains("sign-disabled=true")))
+                    .unwrap_or(false);
+                if sign_disabled {
+                    return redirect("/guestbook", res_builder, Some(ClientError(
+                        "you've already signed, please don't do that again...")))
+                }
+
                 match db::add_guest(name) {
                     Ok(()) => {
                         res_builder
