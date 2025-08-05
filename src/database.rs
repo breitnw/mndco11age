@@ -75,8 +75,7 @@ pub fn add_article(article: Article) -> Result<(), rusqlite::Error> {
 
 pub fn delete_article(article_name: &str) -> Result<(), rusqlite::Error> {
     let conn = Connection::open("data/db.sqlite")?;
-    conn.execute("DELETE FROM articles WHERE title = ?1",
-                 [article_name])?;
+    conn.execute("DELETE FROM articles WHERE title = ?1", [article_name])?;
     Ok(())
 }
 
@@ -98,11 +97,11 @@ pub fn get_articles() -> Result<Vec<Article>, rusqlite::Error> {
     })?;
 
     // TODO: pretty nasty way to reverse the iterator, maybe find something better
-    Ok(article_iter.collect::<Result<Vec<Article>, rusqlite::Error>>()?
+    Ok(article_iter
+        .collect::<Result<Vec<Article>, rusqlite::Error>>()?
         .into_iter()
         .rev()
         .collect())
-
 }
 
 pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
@@ -119,7 +118,7 @@ pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
             location: location.to_string(),
             preview: row.get(3)?,
             html: row.get(4)?,
-            markdown: row.get(5)?
+            markdown: row.get(5)?,
         })
     })?;
     html_iter

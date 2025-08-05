@@ -7,7 +7,7 @@ function resizeCard(item){
   rowHeight = parseInt(grid_style.getPropertyValue('grid-auto-rows'));
   rowGap = parseInt(grid_style.getPropertyValue('grid-row-gap'));
   rowSpan = Math.ceil((item.querySelector(".card-contents").getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
-    item.style.gridRowEnd = "span "+rowSpan;
+  item.style.gridRowEnd = "span "+rowSpan;
 }
 
 function resizeAllCards(){

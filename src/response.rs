@@ -99,6 +99,7 @@ pub(crate) fn build_get_res(
                     false
                 }
             };
+            println!("sign disabled? {}", sign_disabled);
             (
                 "guestbook.html",
                 context! {
