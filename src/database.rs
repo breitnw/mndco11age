@@ -51,7 +51,7 @@ pub fn get_guests() -> Result<Vec<Guest>, rusqlite::Error> {
         Ok(Guest {
             name: row.get(0)?,
             timestamp: row.get(1)?,
-            date: format_date(row.get(1)?),
+            date: format_date_short(row.get(1)?),
         })
     })?;
     guest_iter.collect()
@@ -126,9 +126,16 @@ pub fn get_article(location: &str) -> Result<Article, rusqlite::Error> {
         .unwrap_or(Err(rusqlite::Error::InvalidQuery))
 }
 
+pub(crate) fn format_date_short(timestamp: i64) -> String {
+    DateTime::from_timestamp(timestamp, 0)
+        .unwrap()
+        .format("%m-%d-%y")
+        .to_string()
+}
+
 pub(crate) fn format_date(timestamp: i64) -> String {
     DateTime::from_timestamp(timestamp, 0)
         .unwrap()
-        .format("%B %e, %Y")
+        .format("%B %d, %Y")
         .to_string()
 }

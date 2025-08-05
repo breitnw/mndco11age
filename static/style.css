@@ -411,7 +411,15 @@ input[type=submit] {
     background-color: lightsteelblue;
 }
 
+td {
+    padding: 0;
+    padding-right: 10px;
+    vertical-align: top;
+}
+
 #guest-list {
+    vertical-align: top;
+    text-align: left;
     list-style-type: none;
     padding-left: 0;
 }
