@@ -4,3 +4,4 @@ target
 resources
 .env
 .direnv/
+data/db.sqlite

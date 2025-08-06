@@ -92,7 +92,7 @@ pub(crate) fn build_get_res(
             let sign_disabled = req
                 .headers
                 .iter()
-                .find(|h| h.name == "Cookie")
+                .find(|h| h.name == "cookie")
                 .map(|c| std::str::from_utf8(c.value).is_ok_and(|s| s.contains("sign-disabled=true")))
                 .unwrap_or(false);
             (
@@ -158,9 +158,10 @@ pub(crate) fn build_post_res(
                 let sign_disabled = req
                     .headers
                     .iter()
-                    .find(|h| h.name == "Cookie")
+                    .find(|h| h.name == "cookie" || h.name == "Cookie") // I feel like I've seen both...
                     .map(|c| std::str::from_utf8(c.value).is_ok_and(|s| s.contains("sign-disabled=true")))
                     .unwrap_or(false);
+
                 if sign_disabled {
                     return redirect("/guestbook", res_builder, Some(ClientError(
                         "you've already signed, please don't do that again...")))
