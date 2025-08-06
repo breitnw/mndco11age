@@ -411,16 +411,7 @@ input[type=submit] {
     background-color: lightsteelblue;
 }
 
-td {
-    padding: 0;
-    padding-right: 15px;
-    vertical-align: top;
-}
-
 #guest-list {
-    margin: 10px 0px;
-    vertical-align: top;
-    text-align: left;
     list-style-type: none;
     padding-left: 0;
 }
