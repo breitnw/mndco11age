@@ -354,6 +354,8 @@ a:not(.card):hover {
     height: 13px;
     width: 100%;
     display: block;
+    position: relative;
+    top: -0.1px;
 }
 
 @keyframes flash {
@@ -387,13 +389,15 @@ a:not(.card):hover {
 }
 
 .card h4 {
-    text-shadow: 0 0 1px rgba(0,0,0,.6);
+    letter-spacing: 1px;
+    font-size: regular;
+    margin: 1rem 0 0 0;
+}
+
+.card .faded {
+    text-shadow: 0 0 0.5px rgba(0,0,0,.6);
     font-family: monospace;
     color: var(--palette-dark);
-    font-size: regular;
-    /* text-transform: uppercase; */
-    margin: 1rem 0 0 0;
-    letter-spacing: 1px;
 }
 
 .card p {
