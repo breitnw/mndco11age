@@ -9,6 +9,7 @@ open source and on my github too if you're weird like me and wanna know how i ma
 {% endblock %}
 
 {% block contents %}
+<link rel="stylesheet" type="text/css" href="static/icomoon.css">
 <p>
 	i do some software development and research in my free time and
 	for school (cs major @ northwestern). my main interest areas are graphics and programming
@@ -31,7 +32,14 @@ P.S. i do apologize if this website is a bit of an assault on the senses... i ki
 					<span class="loader"></span>
 				</div>
 				<img src="{{ card.image_src }}" alt="{{ card.name }}">
-				<h4><b>{{ card.name }}</b></h4>
+				<h4 class="faded" style="display:inline-block">
+					<b>{{ card.name }}</b>
+				</h4>
+				<span class="faded" style="float:right; font-size:1.4rem; margin-top:13px">
+					{% for tool in card.tool %}<i class="icon-{{ tool }}" style="margin-left:4px"></i>{% endfor %}
+				</span>
+				<!-- <span class="tools" style="float: right"> -->
+				<!-- </span> -->
 			</div>
 			<div class="sep"></div>
 			<div class="card-text">

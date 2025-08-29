@@ -36,6 +36,8 @@ pub struct Card {
     image_src: String,
     name: String,
     description: String,
+    #[serde(rename = "tool")]
+    tools: Vec<String>,
     color: String,
 }
 
