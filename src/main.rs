@@ -29,6 +29,7 @@ fn main() {
     // Build a SSL acceptor from private and public key files
     let acceptor = if use_https {
         let mut acceptor = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+
         acceptor
             .set_private_key_file(dotenv!("PRIVATE_KEY_FILE"), SslFiletype::PEM)
             .unwrap();

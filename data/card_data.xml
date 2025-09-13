@@ -12,6 +12,16 @@
         <color>green</color>
     </card>
     <card>
+        <link>https://github.com/breitnw/looseleaf</link>
+        <image_src>/static/images/demos/construction.gif</image_src>
+        <name>looseleaf</name>
+        <description>
+        A single-header drawing library for embedded UIs, rooted in binary trees
+        </description>
+        <tool>c</tool>
+        <color>yellow</color>
+    </card>
+    <card>
         <link>https://jot.mndco11age.xyz</link>
         <image_src>/static/images/demos/jot.png</image_src>
         <name>jot</name>
