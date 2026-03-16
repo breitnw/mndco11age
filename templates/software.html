@@ -7,44 +7,95 @@ I'm a student studying programming language design and theory, and I love to mak
 
 {% block contents %}
 <link rel="stylesheet" type="text/css" href="static/icomoon.css">
-<p>
-I'm a student studying programming language design and theory. In my free time I love to make organic, free-range, locally grown software. Below you can find some of my favorite projects, my research is mostly on my github though because I can't make it into cool gifs.
-</p>
 
-<!-- <p style="font-size:x-small;color:gray">
-	 P.S. i do apologize if this website is a bit of an assault on the senses... i kinda like it that way...
-	 </p> -->
+<div id="home-page-body">
+ <div id="masonry-container">
+  <div class="masonry">
+   {% for card in page_context.cards %}
+   <a class="card {{ card.color }}" href="{{ card.link }}">
+	<div class="card-contents">
+	 <div class="img-box">
+	  <div class="loading-animation">
+	   <span class="loader"></span>
+	  </div>
+	  <img src="{{ card.image_src }}" alt="{{ card.name }}">
+	  <h4 class="faded" style="display:inline-block">
+	   <b>{{ card.name }}</b>
+	  </h4>
+	  <span class="faded" style="float:right; font-size:1.2rem; margin-top:15px">
+	   {% for tool in card.tool %}<i class="icon-{{ tool }}" style="margin-left:8px"></i>{% endfor %}
+	  </span>
+	  <!-- <span class="tools" style="float: right"> -->
+	  <!-- </span> -->
+	 </div>
+	 <div class="sep"></div>
+	 <div class="card-text">
+	  <p>{{ card.description }}</p>
+	 </div>
+	</div>
+   </a>
+   {% endfor %}
+  </div>
+ </div>
 
-<br>
-
-<div class="masonry">
-	{% for card in page_context.cards %}
-	<a class="card {{ card.color }}" href="{{ card.link }}">
-		<div class="card-contents">
-			<div class="img-box">
-				<div class="loading-animation">
-					<span class="loader"></span>
-				</div>
-				<img src="{{ card.image_src }}" alt="{{ card.name }}">
-				<h4 class="faded" style="display:inline-block">
-					<b>{{ card.name }}</b>
-				</h4>
-				<span class="faded" style="float:right; font-size:1.2rem; margin-top:15px">
-					{% for tool in card.tool %}<i class="icon-{{ tool }}" style="margin-left:8px"></i>{% endfor %}
-				</span>
-				<!-- <span class="tools" style="float: right"> -->
-				<!-- </span> -->
-			</div>
-			<div class="sep"></div>
-			<div class="card-text">
-				<p>{{ card.description }}</p>
-			</div>
-		</div>
-	</a>
-	{% endfor %}
+ <div id="sidebar-container">
+  <div id="sidebar-contents">
+   <div id="about" class="sidebar-box">
+    <h3>About me</h3>
+    Nick Breitling (breitnw)
+    <p>
+     I'm a student studying programming language design and theory. In my free time I love to make organic, free-range, locally grown software, some of which you can find here. My research is mostly on my github because I can't make it into cool gifs.
+    </p>
+    <p>
+     E-mail: breitling.nw (at) gmail (dot) com
+    </p>
+   </div>
+   <div id="stickers">
+    <img class="sticker" src="static/images/stickers-out/haskell.png">
+    <img class="sticker" src="static/images/stickers-out/racket.png">
+    <img class="sticker" src="static/images/stickers-out/linux.png">
+    <img class="sticker" src="static/images/stickers-out/emacs.png">
+   </div>
+  </div>
+ </div>
 </div>
 
 <br>
+
+<script>
+ // randomize sticker positions (i am not good at probability distributions so this sucks lmao)
+ const stickers = document.getElementsByClassName("sticker");
+ const stickerBox = document.getElementById("stickers");
+ const areaWidth = stickerBox.offsetWidth;
+ const areaHeight = stickerBox.offsetHeight;
+
+ var stickerSpacing = 20;
+
+ // try to place the stickers a decent distance apart
+ // Assume nChoices <= nSteps
+ function chooseRandomishNumbers(nChoices, nSteps) {
+     var chosenSteps = [];
+     for (var i = 0; i < nSteps; i += 1) {
+         chosenSteps.push(i / nSteps);
+     }
+     var chosen = [];
+     for (var i = 0; i < nChoices; i += 1) {
+         stepI = Math.floor(Math.random() * chosenSteps.length);
+         chosen.push(chosenSteps[stepI]);
+         chosenSteps.splice(stepI, 1);
+     }
+     return chosen;
+ }
+
+ const xs = chooseRandomishNumbers(stickers.length, stickers.length)
+ const ys = chooseRandomishNumbers(stickers.length, stickers.length)
+ for (var stickerI = 0; stickerI < stickers.length; stickerI += 1) {
+     sticker = stickers[stickerI];
+     sticker.style.left = xs[stickerI] * (areaWidth - sticker.offsetWidth - 30) + "px";
+     sticker.style.top = ys[stickerI] * (areaHeight - sticker.offsetHeight - 30) + "px";
+     sticker.style.transform = "rotate(" + (Math.random() * 20 - 10) + "deg)";
+ }
+</script>
 
 <script type="text/javascript" src="static/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript" src="static/masonry.js"></script>

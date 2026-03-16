@@ -1,6 +1,6 @@
 html {
     /* background: #e3e1d8 url(/static/images/background.jpg); */
-    background: #e3e1d8 url(/static/images/nnnoise-white.svg);
+    background: rgb(236, 237, 231) url(/static/images/nnnoise-white.svg);
     /* background-size: 600px; */
 
     --palette-green-light: #d4dace;
@@ -23,6 +23,8 @@ html {
     --palette-beige-dark: #938677c9;
     --palette-beige-texture: url(/static/images/nnnoise-beige.svg);
 
+    /* spacing and stuff */
+    --basic-gap: 20px;
 }
 
 body {
@@ -32,7 +34,7 @@ body {
 #contents {
     padding: 1.5rem;
     display: block;
-    max-width: 50rem;
+    max-width: 60rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -134,15 +136,60 @@ blockquote p {
     display: inline;
 }
 
+/* MAIN PAGE LAYOUT */
+
+#home-page-body {
+    margin-top: var(--basic-gap);
+    display: flex;
+    flex-direction: row;
+    gap: var(--basic-gap);
+    /* flex-wrap: wrap-reverse; */
+    flex-wrap: wrap;
+}
+
+#sidebar-container {
+    display: flex;
+    overflow-y: visible;
+    flex: 1 0 260px;
+}
+
+#sidebar-contents {
+    position: sticky;
+    top: var(--basic-gap); /* for sticky */
+    height: fit-content;
+}
+
+.sidebar-box {
+    border: 1px dashed darkgray;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: var(--basic-gap);
+}
+
+#stickers {
+    height: 200px;
+    position: relative;
+}
+
+.sticker {
+    position: absolute;
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
+}
+
+#masonry-container {
+    display: flex;
+    height: auto;
+    flex: 10000 1 0;
+    flex-direction: column;
+}
+
 /* NAVBAR */
 
 nav {
     margin-top: 1rem;
     height: 1.2rem;
     padding: 0.5rem 0.25rem;
-    border-width: 1px;
-    border-style: dashed;
-    border-color: darkgray;
+    border: 1px dashed darkgray;
     position: relative;
 }
 
@@ -165,7 +212,7 @@ nav ul {
     padding: 0 0.25rem;
 }
 
-footer a, nav a, #burger-menu a {
+footer, footer a, nav a, #burger-menu a {
     color: gray;
 }
 
@@ -247,9 +294,9 @@ a:not(.card):hover {
 /* MASONRY LAYOUT */
 .masonry {
     display: grid;
-    grid-gap: 30px;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-auto-rows: 5px;
+    grid-gap: var(--basic-gap);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 2px;
 }
 
 .card.green {
@@ -385,7 +432,7 @@ a:not(.card):hover {
 
 /* Add some padding inside the card container */
 .card-text {
-    padding: 8px 16px;
+    padding: 4px 16px;
 }
 
 .card h4 {
