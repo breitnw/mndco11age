@@ -6,6 +6,7 @@ use serde_xml_rs::from_str;
 
 pub(crate) struct Context<'a> {
     pub(crate) cards: Vec<Card>,
+    pub(crate) robots_contents: Vec<u8>,
     pub(crate) jinja_env: Environment<'a>,
 }
 
@@ -26,7 +27,14 @@ impl<'a> Context<'a> {
         let cards: Cards = from_str(data).unwrap();
         let cards = cards.cards;
 
-        Context { cards, jinja_env }
+        // Load robots.txt contents
+        let robots_contents = DATA_DIR
+            .get_file("robots.txt")
+            .unwrap()
+            .contents()
+            .to_vec();
+
+        Context { cards, robots_contents, jinja_env }
     }
 }
 

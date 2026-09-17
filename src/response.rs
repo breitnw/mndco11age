@@ -40,6 +40,13 @@ pub(crate) fn build_get_res(
     let path_split: Vec<_> =
         path.split("/").skip(1).filter(|p| *p != "").collect();
 
+    if path_split.get(0) == Some(&"robots.txt") {
+        return res_builder
+            .header(header::CONTENT_TYPE, mime::TEXT_PLAIN.essence_str())
+            .header(header::CONTENT_LENGTH, ctx.robots_contents.len())
+            .body(ctx.robots_contents.clone());
+    }
+
     let (template, page_context) = match *path_split.get(0).unwrap_or(&"") {
         "static" => {
             // If the first part is "static", access a static resource
